@@ -1,8 +1,7 @@
 package com.battleship;
 
-public class SquareStatus {
+public enum SquareStatus {
 
-    public enum statuses {
         EMPTY("E"),
         SHIP("O"),
         HIT("H"),
@@ -11,7 +10,7 @@ public class SquareStatus {
         private String icon;
 
 
-        statuses (String i) {
+        SquareStatus (String i) {
             icon = i;
         }
 
@@ -22,6 +21,6 @@ public class SquareStatus {
 
 
 
-    }
+
 
 }

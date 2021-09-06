@@ -3,12 +3,12 @@ package com.battleship;
 public class Square {
     private int X;
     private int Y;
-    private SquareStatus.statuses status;
+    private SquareStatus status;
 
     public Square(int x, int y) {
         X = x;
         Y = y;
-        this.status = SquareStatus.statuses.EMPTY;
+        this.status = SquareStatus.EMPTY;
     }
 
     public String getIcon () {
@@ -23,7 +23,7 @@ public class Square {
         return Y;
     }
 
-    public SquareStatus.statuses getStatus() {
+    public SquareStatus getStatus() {
         return status;
     }
 
