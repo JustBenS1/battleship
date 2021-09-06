@@ -15,7 +15,7 @@ public class SquareStatus {
             icon = i;
         }
 
-        String icon() {
+        String getCharacter() {
             return icon;
         }
 

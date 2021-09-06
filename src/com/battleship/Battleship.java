@@ -19,7 +19,7 @@ public class Battleship {
     }
 
     public static void main(String[] args) {
-        String icon = SquareStatus.statuses.EMPTY.name();
+        String icon = SquareStatus.statuses.EMPTY.getCharacter();
         System.out.println(icon);
         while(true){
             int mainMenuOption = menuBuilder(mainMenuOptions);
