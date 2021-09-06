@@ -14,5 +14,18 @@ public class Square {
     public String getIcon () {
         return status.getCharacter();
     }
+
+    public int getX() {
+        return X;
+    }
+
+    public int getY() {
+        return Y;
+    }
+
+    public SquareStatus.statuses getStatus() {
+        return status;
+    }
+
 }
 
