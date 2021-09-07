@@ -12,11 +12,7 @@ public class Input {
     public boolean checkMainInput(String userInput, int optionCount){
         try {
             int inputValue = Integer.parseInt(userInput);
-            if(inputValue < optionCount && inputValue > -1){
-                return true;
-            }else{
-                return false;
-            }
+            return inputValue < optionCount && inputValue > -1;
         }catch(Exception e){
             return false;
         }

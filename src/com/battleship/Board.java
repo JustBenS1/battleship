@@ -1,7 +1,8 @@
 package com.battleship;
 
 public class Board {
-    Square[][] ocean;
+    private final Square[][] ocean;
+
 
     public Board(int size) {
         this.ocean = new Square[size][size];
@@ -10,6 +11,10 @@ public class Board {
                 ocean[i][j] = new Square(i, j);
             }
         }
+    }
+
+    public Square[][] getOcean(){
+        return this.ocean;
     }
 
     public boolean isSquareEmpty (int row, int col) {

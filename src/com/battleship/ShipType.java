@@ -1,18 +1,23 @@
 package com.battleship;
 
 public enum ShipType {
-    DESTROYER(2),
-    CRUISER(3),
-    SUBMARINE(3),
-    BATTLESHIP(4),
-    CARRIER(5);
-    private int shipLength;
-
-    ShipType (int L) {
+    DESTROYER("Destroyer",2),
+    CRUISER("Cruiser",3),
+    SUBMARINE("Submarine",3),
+    BATTLESHIP("Battleship",4),
+    CARRIER("Carrier",5);
+    private final int shipLength;
+    private final String shipName;
+    ShipType ( String N, int L) {
         shipLength = L;
+        shipName = N;
     }
 
     int getLength() {
         return shipLength;
+    }
+
+    String getShipName(){
+        return shipName;
     }
 }
