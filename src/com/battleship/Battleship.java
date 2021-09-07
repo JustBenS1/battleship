@@ -19,6 +19,10 @@ public class Battleship {
     }
 
     public static void main(String[] args) {
+        Board board = new Board(10);
+
+        String icon = SquareStatus.EMPTY.getCharacter();
+        System.out.println(icon);
         while(true){
             int mainMenuOption = menuBuilder(mainMenuOptions);
             if (mainMenuOption == 0){
