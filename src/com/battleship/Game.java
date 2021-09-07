@@ -34,4 +34,8 @@ public class Game {
         return fleet;
     }
 
+    public void run(){
+        System.out.println("i'm alive");
+    }
+
 }

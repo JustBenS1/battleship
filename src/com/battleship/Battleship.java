@@ -66,6 +66,7 @@ public class Battleship {
             display.clear();
             //game()//while
             Game game = new Game(boardSize);
+            game.run();
             display.clear();
             if(menuBuilder(restartMenuOptions) == 0){
                 endgame = true;

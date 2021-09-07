@@ -84,4 +84,12 @@ public class Input {
         return true;
     }
 
+    public Coordinates convertToCoordinates(String baseInput){
+        String firstChar = baseInput.substring(0, 1).toLowerCase();
+        String secondNum = baseInput.substring(1);
+        int row = firstChar.charAt(0) - 97;
+        int col = Integer.parseInt(secondNum);
+        return new Coordinates(row, col);
+    }
+
 }
