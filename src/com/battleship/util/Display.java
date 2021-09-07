@@ -1,5 +1,6 @@
 package com.battleship.util;
 
+
 public class Display {
     private static Display single_instance = null;
 
@@ -27,9 +28,22 @@ public class Display {
         printMessage("Please choose an option (number required) : ");
     }
 
-    public void clear() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
+    public void ClearConsole(){
+        try{
+            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
 
+            if(operatingSystem.contains("Windows")){
+                ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
+                Process startProcess = pb.inheritIO().start();
+                startProcess.waitFor();
+            } else {
+                ProcessBuilder pb = new ProcessBuilder("clear");
+                Process startProcess = pb.inheritIO().start();
+
+                startProcess.waitFor();
+            }
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }
 }
