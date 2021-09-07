@@ -27,4 +27,9 @@ public class Display {
         printMessage("Please choose an option (number required) : ");
     }
 
+    public void clear() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
 }

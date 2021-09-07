@@ -37,10 +37,8 @@ public class Player {
     }
 
     public String getPlayerName() {
-        String userInput;
-
         display.printMenuOptions(choosePlayerNameText);
-        userInput = input.getInput();
+        String userInput = input.getInput();
         if (input.isStringOnlySpace(userInput) || userInput.equals("")) {
             return "Dummy";
         }
