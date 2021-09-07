@@ -1,9 +1,13 @@
 package com.battleship;
 
 public class Square {
-    private final int X;
-    private final int Y;
+    private int X;
+    private int Y;
     private SquareStatus status;
+
+    public Square(){
+        this.status = SquareStatus.EMPTY;
+    }
 
     public Square(int x, int y) {
         X = x;
@@ -15,8 +19,16 @@ public class Square {
         return status.getCharacter();
     }
 
+    public void setX(int x) {
+        X = x;
+    }
+
     public int getX() {
         return X;
+    }
+
+    public void setY(int y) {
+        Y = y;
     }
 
     public int getY() {

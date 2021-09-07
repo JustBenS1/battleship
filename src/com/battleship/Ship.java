@@ -14,5 +14,11 @@ public class Ship {
     public void setSquares(ArrayList<Square> squares) {
         this.squares = squares;
     }
+
+    public Ship(int size){
+        for (int i = 0; i < size; i++) {
+            squares.add(new Square());
+        }
+    }
 }
 

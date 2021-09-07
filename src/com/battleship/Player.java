@@ -18,9 +18,10 @@ public class Player {
         this.currentHP = currentHP;
     }
 
-    public Player(int maxHP, ArrayList<Ship> fleet) {
+    public Player(int maxHP, ArrayList<Ship> fleet, int size) {
         this.currentHP = maxHP;
         this.fleet = fleet;
+        Board ocean = new Board(size);
     }
 
     public boolean isAlive() {
