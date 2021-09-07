@@ -12,16 +12,21 @@ public class Player {
     private int currentHP;
     private final String playerName;
     private final String[] choosePlayerNameText = {"Please, provide your name : "};
+    private final Board ocean;
 
     public Player(int maxHP, ArrayList<Ship> fleet, int size) {
         this.currentHP = maxHP;
         this.fleet = fleet;
-        Board ocean = new Board(size);
+        ocean = new Board(size);
         playerName = getPlayerName();
     }
 
     public ArrayList<Ship> getFleet() {
         return fleet;
+    }
+
+    public Board getOcean() {
+        return ocean;
     }
 
     public int getCurrentHP() {

@@ -36,6 +36,15 @@ public class Game {
 
     public void run(){
         System.out.println("i'm alive");
+        // placement phase player1 (baseFleet)
+        // placement phase player2
+
+
+    }
+
+    public void placeShips(Player player) {
+        BoardFactory boardFactory = new BoardFactory(player.getOcean(), player.getFleet());
+
     }
 
 }

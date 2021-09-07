@@ -1,5 +1,7 @@
 package com.battleship.util;
 
+import com.battleship.Directions;
+
 import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.Scanner;
@@ -90,6 +92,15 @@ public class Input {
         int row = firstChar.charAt(0) - 97;
         int col = Integer.parseInt(secondNum);
         return new Coordinates(row, col);
+    }
+
+    public boolean isValidDirection(String input) {
+        for (Directions direction :Directions.values()) {
+            if (direction.name().equals(input)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }
