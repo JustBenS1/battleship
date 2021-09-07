@@ -1,4 +1,4 @@
-package com.battleship.util;
+package com.battleship;
 
 import com.battleship.Square;
 
