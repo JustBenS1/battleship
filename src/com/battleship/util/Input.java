@@ -1,5 +1,7 @@
 package com.battleship.util;
 
+import java.util.InputMismatchException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Input {
@@ -57,6 +59,27 @@ public class Input {
             if (string.charAt(i) != ' ') {
                 return false;
             }
+        }
+        return true;
+    }
+
+    public boolean isCoordinateOnBoard (String input, int boardSize) {
+        if (input.length() < 2) {
+            return false;
+        }
+        String firstChar = input.substring(0, 1).toLowerCase();
+        String secondNum = input.substring(1);
+        int firstLetter = firstChar.charAt(0) - 97;
+        if (firstLetter < 0 || firstLetter >= boardSize ) {
+            return false;
+        }
+        try {
+            int numberInput = Integer.parseInt(secondNum);
+            if (numberInput < 1 || numberInput > boardSize) {
+                return false;
+            }
+        }  catch (Exception e) {
+            return false;
         }
         return true;
     }
