@@ -8,9 +8,9 @@ public enum ShipType {
     CARRIER("Carrier",5);
     private final int shipLength;
     private final String shipName;
-    ShipType ( String N, int L) {
-        shipLength = L;
-        shipName = N;
+    ShipType ( String shipName, int shipLength) {
+        this.shipLength = shipLength;
+        this.shipName = shipName;
     }
 
     int getLength() {
