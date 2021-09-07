@@ -52,4 +52,13 @@ public class Input {
         return "";
     }
 
+    public boolean isStringOnlySpace (String string) {
+        for (int i = 0; i < string.length(); i++) {
+            if (string.charAt(i) != ' ') {
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
