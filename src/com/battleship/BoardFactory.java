@@ -5,13 +5,14 @@ import com.battleship.util.*;
 import java.util.ArrayList;
 
 public class BoardFactory {
-    public Display display= Display.getInstance();
-    public Input input= Input.getInstance();
+    public Display display = Display.getInstance();
+    public Input input = Input.getInstance();
     private ArrayList<Ship> fleet;
     private Board board;
     private Coordinates startCoordinate;
     private Coordinates endCoordinate;
     private int shipSize;
+    private String direction;
 
 
     public BoardFactory(Board board, ArrayList<Ship> fleet) {
@@ -19,92 +20,124 @@ public class BoardFactory {
         this.board = board;
     }
 
-    public void getValidPlacement(){
+    public void placementValidation() {
+        boolean isShipOnBoard = false;
+        boolean areSurroundingsValid = false;
+        while (!isShipOnBoard || !areSurroundingsValid) {
+
+            boolean isValidPlacement = false;
+            boolean isValidDirection = false;
+
+            while (!isValidPlacement) {
+                isValidPlacement = getValidPlacement();
+                if (!isValidPlacement) {
+                    display.printMessageLine("Give a valid Coordinate!");
+                }
+            }
+            while (!isValidDirection) {
+                isValidDirection = getValidDirection();
+                if (! isValidDirection) {
+                    display.printMessageLine("Type a valid direction!");
+                }
+            }
+            isShipOnBoard = checkShipInBoard(direction);
+            if (! isShipOnBoard) {
+                display.printMessageLine("The ship would go off the board!");
+                continue;
+            }
+            areSurroundingsValid = checkSurroundings();
+        }
+    }
+
+    public boolean getValidPlacement() {
         display.printMessage("Please give a start coordinate (eg.: A1) : ");
         String userInput = input.getInput();
         display.clear();
-        if(!input.isCoordinateOnBoard(userInput, board.getSize())){
-            display.clear();
-            getValidPlacement();
+        if (!input.isCoordinateOnBoard(userInput, board.getSize())) {
+            return false;
         }
         Coordinates coordinate = input.convertToCoordinates(userInput);
-        if (!board.isSquareEmpty(coordinate) || !board.areNeighboursEmpty(coordinate)){
-            display.clear();
-            getValidPlacement();
+        if (!board.isSquareEmpty(coordinate) || !board.areNeighboursEmpty(coordinate)) {
+            return false;
         }
         //direction
         startCoordinate = coordinate;
-        getValidDirection();
+        display.clear();
+        return true;
     }
 
-    public void getValidDirection() {
+    public boolean getValidDirection() {
         display.printMessage("Please give a direction (North, East, South, West) : ");
         String direction = input.getInput().toUpperCase();
         display.clear();
         if (!Input.getInstance().isValidDirection(direction)) {
-            getValidPlacement();
+            return false;
         }
-        // Other end In Board
-        checkShipInBoard(direction);
+        this.direction = direction;
+        display.clear();
+        return true;
     }
 
-    public void checkShipInBoard(String direction) {
+    public boolean checkShipInBoard(String direction) {
         int newX = startCoordinate.getX();
         int newY = startCoordinate.getY();
         Coordinates checkCoordinate;
         switch (direction) {
             case "NORTH" -> {
                 checkCoordinate = new Coordinates(newX, newY - shipSize);
-                if(!isEndOnBoard(checkCoordinate)) {
-                    getValidPlacement();
+                if (!isEndOnBoard(checkCoordinate)) {
+                    return false;
                 }
                 this.endCoordinate = this.startCoordinate;
                 this.startCoordinate = checkCoordinate;
             }
             case "WEST" -> {
                 checkCoordinate = new Coordinates(newX - shipSize, newY);
-                if(!isEndOnBoard(checkCoordinate)) {
-                    getValidPlacement();
+                if (!isEndOnBoard(checkCoordinate)) {
+                    return false;
                 }
                 this.endCoordinate = this.startCoordinate;
                 this.startCoordinate = checkCoordinate;
             }
             case "SOUTH" -> {
                 checkCoordinate = new Coordinates(newX, newY + shipSize);
-                if(!isEndOnBoard(checkCoordinate)) {
-                    getValidPlacement();
+                if (!isEndOnBoard(checkCoordinate)) {
+                    return false;
                 }
                 this.endCoordinate = checkCoordinate;
             }
             case "EAST" -> {
                 checkCoordinate = new Coordinates(newX + shipSize, newY);
-                if(!isEndOnBoard(checkCoordinate)) {
-                    getValidPlacement();
+                if (!isEndOnBoard(checkCoordinate)) {
+                    return false;
                 }
                 this.endCoordinate = checkCoordinate;
             }
         }
-        checkSurroundings();
+        display.clear();
+        return true;
     }
 
-    public void checkSurroundings() {
+    public boolean checkSurroundings() {
         Coordinates coordinate;
         if (startCoordinate.getX() == endCoordinate.getX()) {
-            for (int i = startCoordinate.getY(); i <= endCoordinate.getY() ; i++) {
+            for (int i = startCoordinate.getY(); i <= endCoordinate.getY(); i++) {
                 coordinate = new Coordinates(startCoordinate.getX(), startCoordinate.getY() + i);
-                if (! board.areNeighboursEmpty(coordinate)) {
-                    getValidPlacement();
+                if (!board.areNeighboursEmpty(coordinate)) {
+                    return false;
                 }
             }
         } else {
-            for (int i = startCoordinate.getX(); i <= endCoordinate.getX() ; i++) {
+            for (int i = startCoordinate.getX(); i <= endCoordinate.getX(); i++) {
                 coordinate = new Coordinates(startCoordinate.getX() + i, startCoordinate.getY());
-                if (! board.areNeighboursEmpty(coordinate)) {
-                    getValidPlacement();
+                if (!board.areNeighboursEmpty(coordinate)) {
+                    return false;
                 }
             }
         }
         // Placement ();
+        display.clear();
+        return true;
     }
 
     public boolean isEndOnBoard(Coordinates coordinate) {
@@ -115,7 +148,7 @@ public class BoardFactory {
     public void run() {
         for (Ship ship : fleet) {
             shipSize = ship.getSquares().size();
-            getValidPlacement();
+            placementValidation();
 
         }
     }
