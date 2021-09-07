@@ -15,6 +15,7 @@ public class Game {
     public Game(int size){
         this.size = size;
         ArrayList<Ship> baseFleet = createShipList();
+
         player1 = new Player(maxHp, baseFleet, getSize());
         player2 = new Player(maxHp, baseFleet, getSize());
     }

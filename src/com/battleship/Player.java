@@ -1,8 +1,11 @@
 package com.battleship;
 
+import com.battleship.util.Display;
+
 import java.util.ArrayList;
 
 public class Player {
+    private Display display = Display.getInstance();
     private final ArrayList<Ship> fleet;
     private int currentHP;
 
@@ -26,6 +29,10 @@ public class Player {
 
     public boolean isAlive() {
         return currentHP > 0;
+    }
+
+    public String getPlayerName() {
+        return "";
     }
 
 }

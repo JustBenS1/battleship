@@ -3,8 +3,8 @@ package com.battleship;
 import com.battleship.util.*;
 
 public class Battleship {
-    public static Display display = new Display();
-    public static Input input = new Input();
+    public static Display display = Display.getInstance();
+    public static Input input = Input.getInstance();
     private static final String[] mainMenuOptions = {"New Game : 1", "High Scores : 2", "Exit : 0"};
     private static final String[] restartMenuOptions = {"New Game : 1", "Exit : 0"};
     private static final String[] getBoardSizeText = {"Please provide board size (between 5-25) : ", "Back (0) : "};

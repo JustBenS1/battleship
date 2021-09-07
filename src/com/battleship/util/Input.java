@@ -3,6 +3,17 @@ package com.battleship.util;
 import java.util.Scanner;
 
 public class Input {
+    private static Input single_instance = null;
+
+    private Input() {}
+
+    public static Input getInstance() {
+        if (single_instance == null)
+            single_instance = new Input();
+
+        return single_instance;
+    }
+
     private Scanner scanner = new Scanner(System.in);
 
     public String getInput(){
@@ -35,6 +46,10 @@ public class Input {
         getInput();
 
         return new int[0];
+    }
+
+    public String getPlayerName() {
+        return "";
     }
 
 }

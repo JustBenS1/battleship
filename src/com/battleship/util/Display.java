@@ -1,6 +1,17 @@
 package com.battleship.util;
 
 public class Display {
+    private static Display single_instance = null;
+
+    private Display() {}
+
+    public static Display getInstance() {
+        if (single_instance == null)
+            single_instance = new Display();
+
+        return single_instance;
+    }
+
     public void printMessage(String message){
         System.out.print(message);
     }
