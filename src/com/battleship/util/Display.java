@@ -21,11 +21,11 @@ public class Display {
         System.out.println(message);
     }
 
-    public void printMenuOptions(String[] menuOptions){
+    public void printMenuOptions(String[] menuOptions, String message){
         for(String menuOption: menuOptions){
             printMessageLine(menuOption);
         }
-        printMessage("Please choose an option (number required) : ");
+        printMessage(message);
     }
 
     public void ClearConsole(){

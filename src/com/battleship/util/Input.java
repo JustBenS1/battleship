@@ -34,7 +34,7 @@ public class Input {
     public int checkSizeInput(String userInput, int minSize, int maxSize){
         try {
             int inputValue = Integer.parseInt(userInput);
-            if (inputValue == 0 || (inputValue>minSize && inputValue < maxSize)){
+            if (inputValue == 0 || (inputValue >= minSize && inputValue <= maxSize)){
                 return inputValue;
             }else{
                 return -1;
