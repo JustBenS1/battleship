@@ -28,7 +28,7 @@ public class Display {
         printMessage(message);
     }
 
-    public void ClearConsole(){
+    public void clear(){
         try{
             String operatingSystem = System.getProperty("os.name"); //Check the current operating system
 
