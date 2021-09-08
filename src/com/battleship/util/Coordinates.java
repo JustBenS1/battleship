@@ -1,8 +1,8 @@
 package com.battleship.util;
 
 public class Coordinates {
-    private final int X;
-    private final int Y;
+    private int X;
+    private int Y;
 
     public Coordinates(int X, int Y){
         this.X = X;
@@ -15,5 +15,13 @@ public class Coordinates {
 
     public int getY() {
         return Y;
+    }
+
+    public void setY(int y) {
+        Y = y;
+    }
+
+    public void setX(int x) {
+        X = x;
     }
 }

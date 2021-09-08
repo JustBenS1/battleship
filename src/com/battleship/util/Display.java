@@ -1,6 +1,9 @@
 package com.battleship.util;
 
 
+import com.battleship.Board;
+import com.battleship.Square;
+
 public class Display {
     private static Display single_instance = null;
 
@@ -44,6 +47,16 @@ public class Display {
             }
         }catch(Exception e){
             System.out.println(e);
+        }
+    }
+
+    public void printBoard(Board board){
+        Square[][] ocean = board.getOcean();
+        for (int i = 0; i < board.getSize(); i++) {
+            for (int j = 0; j < board.getSize(); j++) {
+                System.out.print(ocean[i][j].getIcon());
+            }
+            System.out.println();
         }
     }
 }

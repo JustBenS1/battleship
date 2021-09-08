@@ -3,12 +3,8 @@ package com.battleship;
 import com.battleship.util.Coordinates;
 
 public class Board {
-    private final Square[][] ocean;
+    private Square[][] ocean;
     private final int size;
-
-    public int getSize() {
-        return size;
-    }
 
     public Board(int size) {
         this.size = size;
@@ -20,8 +16,16 @@ public class Board {
         }
     }
 
+    public int getSize() {
+        return size;
+    }
+
     public Square[][] getOcean(){
         return this.ocean;
+    }
+
+    public void setOceanField(Coordinates coordinates, Square newSquare) {
+        this.ocean[coordinates.getX()][coordinates.getY()] = newSquare;
     }
 
     public boolean isSquareEmpty (Coordinates coordinate) {
