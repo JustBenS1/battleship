@@ -20,7 +20,7 @@ public class BoardFactory {
         this.board = board;
     }
 
-    public void placementValidation() {
+    public void placementValidation(Ship ship) {
         boolean isShipOnBoard = false;
         boolean areSurroundingsValid = false;
         while (!isShipOnBoard || !areSurroundingsValid) {
@@ -34,12 +34,14 @@ public class BoardFactory {
                     display.printMessageLine("Give a valid Coordinate!");
                 }
             }
+
             while (!isValidDirection) {
                 isValidDirection = getValidDirection();
                 if (! isValidDirection) {
                     display.printMessageLine("Type a valid direction!");
                 }
             }
+
             isShipOnBoard = checkShipInBoard(direction);
             if (! isShipOnBoard) {
                 display.printMessageLine("The ship would go off the board!");
@@ -47,6 +49,7 @@ public class BoardFactory {
             }
             areSurroundingsValid = checkSurroundings();
         }
+        placeShipOnBoard(ship);
     }
 
     public boolean getValidPlacement() {
@@ -135,7 +138,6 @@ public class BoardFactory {
                 }
             }
         }
-        // Placement ();
         display.clear();
         return true;
     }
@@ -145,10 +147,36 @@ public class BoardFactory {
                 coordinate.getY() >= 0 && coordinate.getY() < board.getSize();
     }
 
+    public void placeShipOnBoard(Ship ship){
+        Square newSquare;
+        int baseX = startCoordinate.getX();
+        int baseY = startCoordinate.getY();
+        Coordinates coordinate = new Coordinates(baseX, baseY);
+        ArrayList<Square> newShipSquares = new ArrayList<Square>();
+        if (startCoordinate.getX() == endCoordinate.getX()) {
+            for (int i = baseY; i <= baseY; i++) {
+                coordinate.setY(baseY + i);
+                newSquare = new Square(coordinate);
+                board.setOceanField(coordinate, newSquare);
+                newShipSquares.add(newSquare);
+            }
+            ship.setSquares(newShipSquares);
+        } else {
+            for (int i = startCoordinate.getX(); i <= endCoordinate.getX(); i++) {
+                coordinate = new Coordinates(startCoordinate.getX() + i, startCoordinate.getY());
+                coordinate.setX(baseX + i);
+                newSquare = new Square(coordinate);
+                board.setOceanField(coordinate, newSquare);
+                newShipSquares.add(newSquare);
+            }
+            ship.setSquares(newShipSquares);
+        }
+    }
+
     public void run() {
         for (Ship ship : fleet) {
             shipSize = ship.getSquares().size();
-            placementValidation();
+            placementValidation(ship);
 
         }
     }
