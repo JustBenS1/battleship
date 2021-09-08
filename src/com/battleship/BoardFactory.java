@@ -170,7 +170,7 @@ public class BoardFactory {
         int endX = endCoordinate.getX();
         int endY = endCoordinate.getY();
         Coordinates coordinate = new Coordinates(baseX, baseY);
-        ArrayList<Square> newShipSquares = new ArrayList<Square>();
+        ArrayList<Square> newShipSquares = new ArrayList<>();
         if (baseX == endX) {
             for (int i = 0; i <= endY-baseY; i++) {
                 coordinate.setY(baseY + i);
@@ -199,7 +199,7 @@ public class BoardFactory {
                 break;
             }
             display.clear();
-            display.printBoard(board);
+            display.printBoard(board, false);
 
         }
         player.setOcean(board);

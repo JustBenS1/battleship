@@ -1,19 +1,25 @@
 package com.battleship;
 
 public enum SquareStatus {
-        EMPTY("~"),
-        SHIP("O"),
-        HIT("H"),
-        MISSED("M"),
-        SUNK("S");
+        EMPTY("~", "~"),
+        SHIP("O", "~"),
+        HIT("H", "H"),
+        MISSED("M", "M"),
+        SUNK("S", "M");
 
-        private final String icon;
+        private final String shown;
+        private final String hidden;
 
-        SquareStatus (String icon) {
-            this.icon = icon;
+        SquareStatus (String shown, String hidden) {
+            this.shown = shown;
+            this.hidden = hidden;
         }
 
-        String getCharacter() {
-            return icon;
+        String getShownIcon() {
+            return shown;
+        }
+
+        String getHiddenIcon() {
+            return hidden;
         }
 }

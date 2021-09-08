@@ -2,8 +2,10 @@ package com.battleship;
 
 import com.battleship.util.Display;
 import com.battleship.util.Endgame;
+import com.battleship.util.Input;
 
 import java.util.ArrayList;
+
 
 
 public class Game {
@@ -12,7 +14,9 @@ public class Game {
     private Player player2;
     private int maxHp;
     private Display display = Display.getInstance();
+    private Input input = Input.getInstance();
     private Endgame endgame = Endgame.getInstance();
+    private int roundCounter = 0;
 
     public int getSize() {
         return size;
@@ -51,7 +55,13 @@ public class Game {
             if (endgame.getIsEndMatch()){
                 continue;
             }
-            // shooting
+            while (endgame.getIsEndMatch()) {
+                if (roundCounter % 2 == 0) {
+                    takeShot(player1, player2, "Player 1");
+                } else {
+                    takeShot(player2, player1, "Player 2");
+                }
+            }
         }
     }
 
@@ -59,7 +69,14 @@ public class Game {
         BoardFactory boardFactory = new BoardFactory(player);
         boardFactory.run();
         System.out.println("___________");
-        display.printBoard(player.getOcean());
+        display.printBoard(player.getOcean(), false);
+    }
+
+    public void takeShot(Player shooter, Player target, String currentPlayer) {
+        display.printBoard(target.getOcean(), false);
+        display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
+        input.getInput();
+
     }
 
 }

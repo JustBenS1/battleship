@@ -50,7 +50,8 @@ public class Display {
         }
     }
 
-    public void printBoard(Board board){
+    public void printBoard(Board board, boolean hiddenIcon){
+
         System.out.println();
         Square[][] ocean = board.getOcean();
         String headerLine = "  ";
@@ -58,12 +59,21 @@ public class Display {
             headerLine += i % 10 + " ";//💥("collision")🌊("wave")☁("cloud")  🟦("blue square"), emoji icon possibilities
         }
         System.out.println(headerLine);
+
         for (int i = 0; i < board.getSize(); i++) {
             System.out.print(Character.toChars(65 + i));
             System.out.print(" ");
-            for (int j = 0; j < board.getSize(); j++) {
-                System.out.print(ocean[i][j].getIcon() + " ");
+
+            if (hiddenIcon) {
+                for (int j = 0; j < board.getSize(); j++) {
+                    System.out.print(ocean[i][j].getHidden() + " ");
+                }
+            } else {
+                for (int j = 0; j < board.getSize(); j++) {
+                    System.out.print(ocean[i][j].getShown() + " ");
+                }
             }
+
             System.out.print(Character.toChars(65 + i));
             System.out.print(" ");
             System.out.println();

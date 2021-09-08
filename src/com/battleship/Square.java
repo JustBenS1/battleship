@@ -20,9 +20,15 @@ public class Square {
         this.status = SquareStatus.EMPTY;
     }
 
-    public String getIcon () {
-        return status.getCharacter();
+    public String getHidden () {
+        return status.getHiddenIcon();
     }
+
+    public String getShown() {
+        return status.getShownIcon();
+    }
+
+
 
     public SquareStatus getStatus() {
         return status;
