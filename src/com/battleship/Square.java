@@ -16,8 +16,7 @@ public class Square {
     }
 
     public Square(int x, int y) {
-        this.coordinates.setX(x);
-        this.coordinates.setY(y);
+        this.coordinates = new Coordinates(x,y);
         this.status = SquareStatus.EMPTY;
     }
 

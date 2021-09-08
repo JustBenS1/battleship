@@ -2,13 +2,11 @@ package com.battleship.util;
 
 import com.battleship.Directions;
 
-import java.util.InputMismatchException;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Input {
     private static Input single_instance = null;
-
+    private Endgame endgame = Endgame.getInstance();
     private Input() {}
 
     public static Input getInstance() {
@@ -19,6 +17,7 @@ public class Input {
     }
 
     private Scanner scanner = new Scanner(System.in);
+
 
     public String getInput(){
         return String.valueOf(scanner.nextLine());
@@ -66,8 +65,13 @@ public class Input {
     }
 
     public boolean isCoordinateOnBoard (String input, int boardSize) {
+
         if (input.length() < 2) {
             return false;
+        }
+        if (inputIsQuit(input)){
+            endgame.setEndMatch(true);
+            return true;
         }
         String firstChar = input.substring(0, 1).toLowerCase();
         String secondNum = input.substring(1);
@@ -95,10 +99,22 @@ public class Input {
     }
 
     public boolean isValidDirection(String input) {
+        if(input.equalsIgnoreCase("quit")){
+            endgame.setEndMatch(true);
+            return true;
+        }
         for (Directions direction :Directions.values()) {
             if (direction.name().equals(input)) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean inputIsQuit(String userInput){
+        if (userInput.equalsIgnoreCase("quit")){
+            endgame.setEndMatch(true);
+            return true;
         }
         return false;
     }

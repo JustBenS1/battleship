@@ -5,6 +5,7 @@ import com.battleship.util.*;
 import java.util.ArrayList;
 
 public class BoardFactory {
+    private Player player;
     public Display display = Display.getInstance();
     public Input input = Input.getInstance();
     private ArrayList<Ship> fleet;
@@ -13,33 +14,41 @@ public class BoardFactory {
     private Coordinates endCoordinate;
     private int shipSize;
     private String direction;
+    private Endgame endgame = Endgame.getInstance();
 
 
-    public BoardFactory(Board board, ArrayList<Ship> fleet) {
-        this.fleet = fleet;
-        this.board = board;
+    public BoardFactory(Player player) {
+        this.player = player;
+        this.fleet = this.player.getFleet();
+        this.board = this.player.getOcean();
     }
 
     public void placementValidation(Ship ship) {
         boolean isShipOnBoard = false;
         boolean areSurroundingsValid = false;
-        while (!isShipOnBoard || !areSurroundingsValid) {
+        while ((!isShipOnBoard || !areSurroundingsValid) && !endgame.getIsEndMatch()) {
 
             boolean isValidPlacement = false;
             boolean isValidDirection = false;
 
-            while (!isValidPlacement) {
+            while (!isValidPlacement && !endgame.getIsEndMatch()) {
                 isValidPlacement = getValidPlacement();
                 if (!isValidPlacement) {
                     display.printMessageLine("Give a valid Coordinate!");
                 }
             }
+            if (endgame.getIsEndMatch()){
+                continue;
+            }
 
-            while (!isValidDirection) {
+            while (!isValidDirection && !endgame.getIsEndMatch()) {
                 isValidDirection = getValidDirection();
-                if (! isValidDirection) {
+                if (!isValidDirection) {
                     display.printMessageLine("Type a valid direction!");
                 }
+            }
+            if (endgame.getIsEndMatch()){
+                continue;
             }
 
             isShipOnBoard = checkShipInBoard(direction);
@@ -49,12 +58,18 @@ public class BoardFactory {
             }
             areSurroundingsValid = checkSurroundings();
         }
-        placeShipOnBoard(ship);
+        if (!endgame.getIsEndMatch()){
+            placeShipOnBoard(ship);
+        }
+
     }
 
     public boolean getValidPlacement() {
         display.printMessage("Please give a start coordinate (eg.: A1) : ");
         String userInput = input.getInput();
+        if(input.inputIsQuit(userInput)){
+           return false;
+        }
         display.clear();
         if (!input.isCoordinateOnBoard(userInput, board.getSize())) {
             return false;
@@ -72,6 +87,7 @@ public class BoardFactory {
     public boolean getValidDirection() {
         display.printMessage("Please give a direction (North, East, South, West) : ");
         String direction = input.getInput().toUpperCase();
+        input.inputIsQuit(direction);
         display.clear();
         if (!Input.getInstance().isValidDirection(direction)) {
             return false;
@@ -160,7 +176,6 @@ public class BoardFactory {
                 board.setOceanField(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
-            ship.setSquares(newShipSquares);
         } else {
             for (int i = startCoordinate.getX(); i <= endCoordinate.getX(); i++) {
                 coordinate = new Coordinates(startCoordinate.getX() + i, startCoordinate.getY());
@@ -169,17 +184,23 @@ public class BoardFactory {
                 board.setOceanField(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
-            ship.setSquares(newShipSquares);
         }
+        ship.setSquares(newShipSquares);//return ?
     }
 
     public void run() {
         for (Ship ship : fleet) {
             shipSize = ship.getSquares().size();
             placementValidation(ship);
+            if (endgame.getIsEndMatch()){
+                break;
+            }
+            display.clear();
+            display.printBoard(board);
 
         }
+        player.setOcean(board);
+        player.setFleet(fleet);
+        // return ?
     }
-
-
 }

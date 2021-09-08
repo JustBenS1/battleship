@@ -8,11 +8,11 @@ import java.util.ArrayList;
 public class Player {
     private Display display = Display.getInstance();
     private Input input = Input.getInstance();
-    private final ArrayList<Ship> fleet;
+    private ArrayList<Ship> fleet;
     private int currentHP;
     private final String playerName;
     private final String[] choosePlayerNameText = {"Please, provide your name : "};
-    private final Board ocean;
+    private Board ocean;
 
     public Player(int maxHP, ArrayList<Ship> fleet, int size) {
         this.currentHP = maxHP;
@@ -39,6 +39,14 @@ public class Player {
 
     public boolean isAlive() {
         return currentHP > 0;
+    }
+
+    public void setFleet(ArrayList<Ship> fleet) {
+        this.fleet = fleet;
+    }
+
+    public void setOcean(Board ocean) {
+        this.ocean = ocean;
     }
 
     public String getPlayerName() {

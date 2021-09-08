@@ -12,7 +12,8 @@ public class Battleship {
 
     private static final int minSize = 5;
     private static final int maxSize = 25;
-    private static boolean endgame = false;
+    private static Endgame endgame = Endgame.getInstance();
+
     private static int boardSize;
 
 
@@ -27,7 +28,7 @@ public class Battleship {
         return Integer.parseInt(userInput);
     }
 
-    public static int sizeBuilder(){
+    private static int sizeBuilder(){
         String userInput;
         int validInput = -1;
         while(validInput == -1){
@@ -39,11 +40,11 @@ public class Battleship {
         return validInput;
     }
 
-    public static void menuSettings(){
+    private static void menuSettings(){
         int mainMenuOption = menuBuilder(mainMenuOptions);
         display.clear();
         if (mainMenuOption == 0){
-            endgame = true;
+            endgame.setEndgame(true);
         }else if (mainMenuOption == 1){//newgame
             int sizeOption = sizeBuilder();
             if(sizeOption == 0){
@@ -61,7 +62,7 @@ public class Battleship {
     public static void main(String[] args) {
 
         display.clear();
-        while(!endgame){
+        while(!endgame.getIsEndgame()){
             menuSettings();
             display.clear();
             //game()//while
@@ -69,7 +70,7 @@ public class Battleship {
             game.run();
             display.clear();
             if(menuBuilder(restartMenuOptions) == 0){
-                endgame = true;
+                endgame.setEndgame(true);
             }
         }
         display.clear();

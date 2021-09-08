@@ -6,10 +6,6 @@ public class Board {
     private Square[][] ocean;
     private final int size;
 
-    public int getSize() {
-        return size;
-    }
-
     public Board(int size) {
         this.size = size;
         this.ocean = new Square[size][size];
@@ -18,6 +14,10 @@ public class Board {
                 ocean[i][j] = new Square(i, j);
             }
         }
+    }
+
+    public int getSize() {
+        return size;
     }
 
     public Square[][] getOcean(){

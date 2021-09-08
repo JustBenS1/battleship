@@ -1,12 +1,18 @@
 package com.battleship;
 
+import com.battleship.util.Display;
+import com.battleship.util.Endgame;
+
 import java.util.ArrayList;
+
 
 public class Game {
     private final int size;
     private Player player1;
     private Player player2;
     private int maxHp;
+    private Display display = Display.getInstance();
+    private Endgame endgame = Endgame.getInstance();
 
     public int getSize() {
         return size;
@@ -35,18 +41,25 @@ public class Game {
     }
 
     public void run(){
-        System.out.println("i'm alive");
-        placeShips(player1);
+        while(!endgame.getIsEndMatch()){
+            System.out.println("i'm alive");
+            placeShips(player1);
+            if (endgame.getIsEndMatch()){
+                continue;
+            }
+            placeShips(player2);
+            if (endgame.getIsEndMatch()){
+                continue;
+            }
+        }
         // placement phase player1 (baseFleet)
         // placement phase player2
-
-
     }
 
     public void placeShips(Player player) {
-        BoardFactory boardFactory = new BoardFactory(player.getOcean(), player.getFleet());
+        BoardFactory boardFactory = new BoardFactory(player);
         boardFactory.run();
-
+        display.printBoard(player.getOcean());
     }
 
 }
