@@ -1,8 +1,7 @@
 package com.battleship;
 
 public enum SquareStatus {
-
-        EMPTY("E"),
+        EMPTY("~"),
         SHIP("O"),
         HIT("H"),
         MISSED("M"),
@@ -17,10 +16,4 @@ public enum SquareStatus {
         String getCharacter() {
             return icon;
         }
-
-
-
-
-
-
 }

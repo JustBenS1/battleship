@@ -51,12 +51,23 @@ public class Display {
     }
 
     public void printBoard(Board board){
+        System.out.println();
         Square[][] ocean = board.getOcean();
+        String headerLine = "  ";
+        for (int i = 1; i <= ocean.length; i++) {
+            headerLine += Integer.toString(i % 10) + " ";
+        }
+        System.out.println(headerLine);
         for (int i = 0; i < board.getSize(); i++) {
+            System.out.print(Character.toChars(65 + i));
+            System.out.print(" ");
             for (int j = 0; j < board.getSize(); j++) {
-                System.out.print(ocean[i][j].getIcon());
+                System.out.print(ocean[i][j].getIcon() + " ");
             }
+            System.out.print(Character.toChars(65 + i));
+            System.out.print(" ");
             System.out.println();
         }
+        System.out.println(headerLine);
     }
 }

@@ -51,9 +51,8 @@ public class Game {
             if (endgame.getIsEndMatch()){
                 continue;
             }
+            // shooting
         }
-        // placement phase player1 (baseFleet)
-        // placement phase player2
     }
 
     public void placeShips(Player player) {

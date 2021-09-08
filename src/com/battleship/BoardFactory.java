@@ -111,7 +111,6 @@ public class BoardFactory {
                 this.startCoordinate = checkCoordinate;
             }
             case "NORTH" -> {
-                System.out.println("#faszkivan");
                 checkCoordinate = new Coordinates(newX - shipSize + 1, newY);
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
