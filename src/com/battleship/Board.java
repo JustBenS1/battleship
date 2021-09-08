@@ -24,8 +24,12 @@ public class Board {
         return this.ocean;
     }
 
-    public void setOceanField(Coordinates coordinates, Square newSquare) {
+    public void setOceanSquare(Coordinates coordinates, Square newSquare) {
         this.ocean[coordinates.getX()][coordinates.getY()] = newSquare;
+    }
+
+    public Square getOceanSquare(Coordinates coordinate) {
+        return this.ocean[coordinate.getX()][coordinate.getY()];
     }
 
     public boolean isSquareEmpty (Coordinates coordinate) {

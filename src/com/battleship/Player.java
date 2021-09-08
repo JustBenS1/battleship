@@ -1,8 +1,10 @@
 package com.battleship;
 
+import com.battleship.util.Coordinates;
 import com.battleship.util.Display;
 import com.battleship.util.Input;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
@@ -57,4 +59,31 @@ public class Player {
         }
         return userInput;
     }
+
+    public Ship getShipByCoordinate(Coordinates coordinate) {
+
+        for (Ship ship : fleet) {
+            ArrayList<Square> shipSquares = ship.getSquares();
+            for (Square square : shipSquares) {
+                if (square.getCoordinates() == coordinate) {
+                    return ship;
+                }
+            }
+        }
+        return new Ship(0);
+    }
+
+    public boolean isShipBarelyAlive (Ship ship) {
+        int hpCounter = 0;
+        for (Square square: ship.getSquares()) {
+            if (square.getStatus().name().equals("SHIP")) {
+                hpCounter++;
+                if (hpCounter > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

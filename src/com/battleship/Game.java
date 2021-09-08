@@ -45,6 +45,7 @@ public class Game {
     }
 
     public void run() {
+        Coordinates targetCoordinate;
         while (!endgame.getIsEndMatch()) {
             System.out.println("i'm alive");
             placeShips(player1);
@@ -55,11 +56,14 @@ public class Game {
             if (endgame.getIsEndMatch()) {
                 continue;
             }
+
             while (endgame.getIsEndMatch()) {
                 if (roundCounter % 2 == 0) {
-                    takeShot(player1, player2, "Player 1");
+                    targetCoordinate = getValidShot(player1, player2, "Player 1");
+                    hitTarget(player2, targetCoordinate);
                 } else {
-                    takeShot(player2, player1, "Player 2");
+                    targetCoordinate = getValidShot(player2, player1, "Player 2");
+                    hitTarget(player1, targetCoordinate);
                 }
             }
         }
@@ -72,19 +76,37 @@ public class Game {
         display.printBoard(player.getOcean(), false);
     }
 
-    public void takeShot(Player shooter, Player target, String currentPlayer) {
+    public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
         display.printBoard(target.getOcean(), false);
         display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
-        String targetInput = "";
+        String targetCoordinateInput = "";
         Coordinates targetCoordinate;
         while (true) {
-            targetInput = input.getInput();
-            if (input.isCoordinateOnBoard(targetInput, target.getOcean().getSize())) {
+            targetCoordinateInput = input.getInput();
+            if (input.isCoordinateOnBoard(targetCoordinateInput, target.getOcean().getSize())) {
 
-                targetCoordinate = input.convertToCoordinates(targetInput);
+                targetCoordinate = input.convertToCoordinates(targetCoordinateInput);
                 if (target.getOcean().isSquareShootable(targetCoordinate)) {
                     break;
                 }
+            }
+        }
+        return targetCoordinate;
+    }
+
+    public void hitTarget(Player target, Coordinates targetCoordinate) {
+        Square targetSquare = target.getOcean().getOceanSquare(targetCoordinate);
+        Square newSquare;
+        if (targetSquare.getStatus().name().equals("EMPTY")) {
+            newSquare = new Square(targetCoordinate, SquareStatus.MISSED);
+            target.getOcean().setOceanSquare(targetCoordinate, newSquare);
+        } else {
+            target.setCurrentHP(target.getCurrentHP() - 1);
+            Ship targetShip = target.getShipByCoordinate(targetCoordinate);
+            if (target.isShipBarelyAlive(targetShip)) {
+                //Sinking
+            } else {
+                //coordinate swap in ship and board
             }
         }
     }

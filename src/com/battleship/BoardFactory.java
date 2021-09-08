@@ -175,7 +175,7 @@ public class BoardFactory {
             for (int i = 0; i <= endY-baseY; i++) {
                 coordinate.setY(baseY + i);
                 newSquare = new Square(coordinate);
-                board.setOceanField(coordinate, newSquare);
+                board.setOceanSquare(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
         } else {
@@ -183,7 +183,7 @@ public class BoardFactory {
                 coordinate = new Coordinates(baseX + i, baseY);
                 coordinate.setX(baseX + i);
                 newSquare = new Square(coordinate);
-                board.setOceanField(coordinate, newSquare);
+                board.setOceanSquare(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
         }
