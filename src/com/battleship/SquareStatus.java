@@ -7,11 +7,11 @@ public enum SquareStatus {
         HIT("H"),
         MISSED("M"),
         SUNK("S");
-        private String icon;
 
+        private final String icon;
 
-        SquareStatus (String i) {
-            icon = i;
+        SquareStatus (String icon) {
+            this.icon = icon;
         }
 
         String getCharacter() {
