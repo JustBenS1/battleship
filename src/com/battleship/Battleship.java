@@ -6,7 +6,7 @@ public class Battleship {
     public static Display display = Display.getInstance();
     public static Input input = Input.getInstance();
     private static final String[] mainMenuOptions = {"New Game : 1", "High Scores : 2", "Exit : 0"};
-    private static final String[] restartMenuOptions = {"New Game : 1", "Exit : 0"};
+    private static final String[] restartMenuOptions = {"Main Menu : 1", "Exit : 0"};
     private static final String[] getBoardSizeText = {"Please provide board size (between 5-25)", "Back (0)"};
     private static final String inputNumberPrompt = "Please choose an option (number required) : ";
 
@@ -60,7 +60,6 @@ public class Battleship {
 
 
     public static void main(String[] args) {
-
         display.clear();
         while(!endgame.getIsEndgame()){
             menuSettings();
@@ -71,6 +70,8 @@ public class Battleship {
             display.clear();
             if(menuBuilder(restartMenuOptions) == 0){
                 endgame.setEndgame(true);
+            }else{
+                endgame.setEndMatch(false);
             }
         }
         display.clear();

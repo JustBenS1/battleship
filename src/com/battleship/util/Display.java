@@ -55,7 +55,7 @@ public class Display {
         Square[][] ocean = board.getOcean();
         String headerLine = "  ";
         for (int i = 1; i <= ocean.length; i++) {
-            headerLine += Integer.toString(i % 10) + " ";
+            headerLine += i % 10 + " ";//💥("collision")🌊("wave")☁("cloud")  🟦("blue square"), emoji icon possibilities
         }
         System.out.println(headerLine);
         for (int i = 0; i < board.getSize(); i++) {
