@@ -59,6 +59,7 @@ public class Game {
     public void placeShips(Player player) {
         BoardFactory boardFactory = new BoardFactory(player);
         boardFactory.run();
+        System.out.println("___________");
         display.printBoard(player.getOcean());
     }
 

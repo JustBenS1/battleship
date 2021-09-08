@@ -111,6 +111,7 @@ public class BoardFactory {
                 this.startCoordinate = checkCoordinate;
             }
             case "NORTH" -> {
+                System.out.println("#faszkivan");
                 checkCoordinate = new Coordinates(newX - shipSize + 1, newY);
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
@@ -172,14 +173,14 @@ public class BoardFactory {
         Coordinates coordinate = new Coordinates(baseX, baseY);
         ArrayList<Square> newShipSquares = new ArrayList<Square>();
         if (baseX == endX) {
-            for (int i = baseY; i <= endY; i++) {
+            for (int i = 0; i <= endY-baseY; i++) {
                 coordinate.setY(baseY + i);
                 newSquare = new Square(coordinate);
                 board.setOceanField(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
         } else {
-            for (int i = baseX; i <= endX; i++) {
+            for (int i = 0; i <= endX-baseX; i++) {
                 coordinate = new Coordinates(baseX + i, baseY);
                 coordinate.setX(baseX + i);
                 newSquare = new Square(coordinate);
