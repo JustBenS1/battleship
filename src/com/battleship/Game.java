@@ -24,10 +24,12 @@ public class Game {
 
     public Game(int size) {
         this.size = size;
-        ArrayList<Ship> baseFleet = createShipList();
+        ArrayList<Ship> baseFleet1 = createShipList();
+        ArrayList<Ship> baseFleet2 = createShipList();
 
-        player1 = new Player(maxHp, baseFleet, getSize());
-        player2 = new Player(maxHp, baseFleet, getSize());
+
+        player1 = new Player(maxHp, baseFleet1, getSize());
+        player2 = new Player(maxHp, baseFleet2, getSize());
     }
 
     private ArrayList<Ship> createShipList() {
