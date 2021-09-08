@@ -102,31 +102,31 @@ public class BoardFactory {
         int newY = startCoordinate.getY();
         Coordinates checkCoordinate;
         switch (direction) {
-            case "NORTH" -> {
-                checkCoordinate = new Coordinates(newX, newY - shipSize);
-                if (!isEndOnBoard(checkCoordinate)) {
-                    return false;
-                }
-                this.endCoordinate = this.startCoordinate;
-                this.startCoordinate = checkCoordinate;
-            }
             case "WEST" -> {
-                checkCoordinate = new Coordinates(newX - shipSize, newY);
+                checkCoordinate = new Coordinates(newX, newY - shipSize + 1);
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
                 }
                 this.endCoordinate = this.startCoordinate;
                 this.startCoordinate = checkCoordinate;
             }
-            case "SOUTH" -> {
-                checkCoordinate = new Coordinates(newX, newY + shipSize);
+            case "NORTH" -> {
+                checkCoordinate = new Coordinates(newX - shipSize + 1, newY);
+                if (!isEndOnBoard(checkCoordinate)) {
+                    return false;
+                }
+                this.endCoordinate = this.startCoordinate;
+                this.startCoordinate = checkCoordinate;
+            }
+            case "EAST" -> {
+                checkCoordinate = new Coordinates(newX, newY + shipSize - 1);
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
                 }
                 this.endCoordinate = checkCoordinate;
             }
-            case "EAST" -> {
-                checkCoordinate = new Coordinates(newX + shipSize, newY);
+            case "SOUTH" -> {
+                checkCoordinate = new Coordinates(newX + shipSize - 1, newY);
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
                 }
@@ -191,6 +191,7 @@ public class BoardFactory {
     public void run() {
         for (Ship ship : fleet) {
             shipSize = ship.getSquares().size();
+            System.out.println(shipSize);
             placementValidation(ship);
             if (endgame.getIsEndMatch()){
                 break;

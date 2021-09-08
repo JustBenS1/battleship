@@ -94,7 +94,7 @@ public class Input {
         String firstChar = baseInput.substring(0, 1).toLowerCase();
         String secondNum = baseInput.substring(1);
         int row = firstChar.charAt(0) - 97;
-        int col = Integer.parseInt(secondNum);
+        int col = Integer.parseInt(secondNum) - 1;
         return new Coordinates(row, col);
     }
 
