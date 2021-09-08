@@ -1,11 +1,11 @@
 package com.battleship;
 
+import com.battleship.util.Coordinates;
 import com.battleship.util.Display;
 import com.battleship.util.Endgame;
 import com.battleship.util.Input;
 
 import java.util.ArrayList;
-
 
 
 public class Game {
@@ -22,7 +22,7 @@ public class Game {
         return size;
     }
 
-    public Game(int size){
+    public Game(int size) {
         this.size = size;
         ArrayList<Ship> baseFleet = createShipList();
 
@@ -30,11 +30,11 @@ public class Game {
         player2 = new Player(maxHp, baseFleet, getSize());
     }
 
-    private ArrayList<Ship> createShipList(){
-        ArrayList<Ship> fleet= new ArrayList<>();
+    private ArrayList<Ship> createShipList() {
+        ArrayList<Ship> fleet = new ArrayList<>();
         int maxHp = 0;
 
-        for (ShipType typeOfShip:ShipType.values()) {
+        for (ShipType typeOfShip : ShipType.values()) {
             fleet.add(new Ship(typeOfShip.getLength()));
             maxHp += typeOfShip.getLength();
         }
@@ -44,15 +44,15 @@ public class Game {
         return fleet;
     }
 
-    public void run(){
-        while(!endgame.getIsEndMatch()){
+    public void run() {
+        while (!endgame.getIsEndMatch()) {
             System.out.println("i'm alive");
             placeShips(player1);
-            if (endgame.getIsEndMatch()){
+            if (endgame.getIsEndMatch()) {
                 continue;
             }
             placeShips(player2);
-            if (endgame.getIsEndMatch()){
+            if (endgame.getIsEndMatch()) {
                 continue;
             }
             while (endgame.getIsEndMatch()) {
@@ -75,8 +75,18 @@ public class Game {
     public void takeShot(Player shooter, Player target, String currentPlayer) {
         display.printBoard(target.getOcean(), false);
         display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
-        input.getInput();
+        String targetInput = "";
+        Coordinates targetCoordinate;
+        while (true) {
+            targetInput = input.getInput();
+            if (input.isCoordinateOnBoard(targetInput, target.getOcean().getSize())) {
 
+                targetCoordinate = input.convertToCoordinates(targetInput);
+                if (target.getOcean().isSquareShootable(targetCoordinate)) {
+                    break;
+                }
+            }
+        }
     }
 
 }

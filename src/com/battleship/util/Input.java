@@ -45,12 +45,6 @@ public class Input {
         }
     }
 
-    public int[] getValidCoordinate(){
-        getInput();
-
-        return new int[0];
-    }
-
     public String getPlayerName() {
         return "";
     }

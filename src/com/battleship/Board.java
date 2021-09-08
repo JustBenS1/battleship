@@ -33,6 +33,11 @@ public class Board {
         return square.getStatus().name().equals("EMPTY");
     }
 
+    public boolean isSquareShootable (Coordinates coordinate) {
+        Square square = this.ocean[coordinate.getX()][coordinate.getY()];
+        return square.getStatus().name().equals("EMPTY") || square.getStatus().name().equals("SHIP");
+    }
+
     public boolean areNeighboursEmpty(Coordinates coordinate){
         int[][] differences = new int[][] {
                 {1,1},
