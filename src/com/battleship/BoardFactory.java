@@ -167,18 +167,20 @@ public class BoardFactory {
         Square newSquare;
         int baseX = startCoordinate.getX();
         int baseY = startCoordinate.getY();
+        int endX = endCoordinate.getX();
+        int endY = endCoordinate.getY();
         Coordinates coordinate = new Coordinates(baseX, baseY);
         ArrayList<Square> newShipSquares = new ArrayList<Square>();
-        if (startCoordinate.getX() == endCoordinate.getX()) {
-            for (int i = baseY; i <= baseY; i++) {
+        if (baseX == endX) {
+            for (int i = baseY; i <= endY; i++) {
                 coordinate.setY(baseY + i);
                 newSquare = new Square(coordinate);
                 board.setOceanField(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
         } else {
-            for (int i = startCoordinate.getX(); i <= endCoordinate.getX(); i++) {
-                coordinate = new Coordinates(startCoordinate.getX() + i, startCoordinate.getY());
+            for (int i = baseX; i <= endX; i++) {
+                coordinate = new Coordinates(baseX + i, baseY);
                 coordinate.setX(baseX + i);
                 newSquare = new Square(coordinate);
                 board.setOceanField(coordinate, newSquare);
