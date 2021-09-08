@@ -4,7 +4,7 @@ public enum SquareStatus {
         EMPTY("\uD83D\uDFE6", "\uD83D\uDFE6"),
         SHIP("\uD83D\uDFEB", "\uD83D\uDFE6"),
         HIT("\uD83D\uDCA2", "\uD83D\uDCA2"),
-        MISSED("\uD83D\uDFE8", "\uD83D\uDFE8"),
+        MISSED("🌊", "🌊"),
         SUNK("\uD83D\uDFE6", "\uD83D\uDFE6");
 
         private final String shown;

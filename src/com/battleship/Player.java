@@ -4,7 +4,6 @@ import com.battleship.util.Coordinates;
 import com.battleship.util.Display;
 import com.battleship.util.Input;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
@@ -20,7 +19,7 @@ public class Player {
         this.currentHP = maxHP;
         this.fleet = fleet;
         ocean = new Board(size);
-        playerName = getPlayerName();
+        playerName = getSetPlayerName();
     }
 
     public ArrayList<Ship> getFleet() {
@@ -52,6 +51,10 @@ public class Player {
     }
 
     public String getPlayerName() {
+        return playerName;
+    }
+
+    public String getSetPlayerName() {
         display.printMenuOptions(choosePlayerNameText,"");
         String userInput = input.getInput();
         if (input.isStringOnlySpace(userInput) || userInput.equals("")) {
@@ -61,16 +64,27 @@ public class Player {
     }
 
     public Ship getShipByCoordinate(Coordinates coordinate) {
-
+        Ship shipOut = new Ship(0);
         for (Ship ship : fleet) {
-            ArrayList<Square> shipSquares = ship.getSquares();
-            for (Square square : shipSquares) {
-                if (square.getCoordinates() == coordinate) {
-                    return ship;
+            System.out.println(fleet.size()+" fleetsize");
+            for (Square square : ship.getSquares()) {
+                System.out.println(square.getCoordinates().getX()+"X squarex");
+                System.out.println(square.getCoordinates().getY()+"Y squarey");
+                System.out.println(coordinate.getX()+"X  : coordx");
+                System.out.println(coordinate.getY()+"Y  : coordy");
+                if (square.getCoordinates().getX() == coordinate.getX() &&
+                        square.getCoordinates().getY() == coordinate.getY()) {
+                    System.out.println(ship.getSquares().size() + " ship squares size");
+                    shipOut = ship;
+                    break;
                 }
             }
+            if (!shipOut.getSquares().isEmpty()){
+                break;
+            }
         }
-        return new Ship(0);
+        System.out.println(shipOut.getSquares().size()+"shipout before return");
+        return shipOut;
     }
 
     public boolean isShipBarelyAlive (Ship ship) {

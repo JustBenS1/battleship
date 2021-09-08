@@ -57,7 +57,7 @@ public class Game {
                 continue;
             }
 
-            while (endgame.getIsEndMatch()) {
+            while (!endgame.getIsEndMatch()) {
                 if (roundCounter % 2 == 0) {
                     targetCoordinate = getValidShot(player1, player2, "Player 1");
                     hitTarget(player2, targetCoordinate);
@@ -65,6 +65,8 @@ public class Game {
                     targetCoordinate = getValidShot(player2, player1, "Player 2");
                     hitTarget(player1, targetCoordinate);
                 }
+
+                roundCounter++;
             }
         }
     }
@@ -72,13 +74,14 @@ public class Game {
     public void placeShips(Player player) {
         BoardFactory boardFactory = new BoardFactory(player);
         boardFactory.run();
-        System.out.println("___________");
-        display.printBoard(player.getOcean(), false);
+        System.out.println("shooting phase starts");
+        System.out.println();
     }
 
     public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
-        display.printBoard(target.getOcean(), false);
+        display.printBoard(target.getOcean(),false);
         display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
+        System.out.println("________________");
         String targetCoordinateInput = "";
         Coordinates targetCoordinate;
         while (true) {
@@ -97,16 +100,25 @@ public class Game {
     public void hitTarget(Player target, Coordinates targetCoordinate) {
         Square targetSquare = target.getOcean().getOceanSquare(targetCoordinate);
         Square newSquare;
+        Board board;
         if (targetSquare.getStatus().name().equals("EMPTY")) {
-            newSquare = new Square(targetCoordinate, SquareStatus.MISSED);
-            target.getOcean().setOceanSquare(targetCoordinate, newSquare);
+            board = target.getOcean();
+            board.setOceanSquare(targetCoordinate, SquareStatus.MISSED);
+            target.setOcean(board);
         } else {
             target.setCurrentHP(target.getCurrentHP() - 1);
             Ship targetShip = target.getShipByCoordinate(targetCoordinate);
             if (target.isShipBarelyAlive(targetShip)) {
                 //Sinking
+                System.out.println(targetShip.getSquares().size());
+                System.out.println("fail");
             } else {
-                //coordinate swap in ship and board
+                board = target.getOcean();
+                board.setOceanSquare(targetCoordinate, SquareStatus.HIT);
+                target.setOcean(board);
+
+
+                targetShip.setShipSquareByCoordinates(targetCoordinate,SquareStatus.HIT);
             }
         }
     }
