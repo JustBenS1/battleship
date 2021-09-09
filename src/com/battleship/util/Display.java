@@ -57,22 +57,13 @@ public class Display {
 
         int fieldSpace = 2;
 
-        String padding = "  ";
-
-
-        System.out.println();
         Square[][] ocean = board.getOcean();
-        System.out.print(padding);
-        for (int i = 1; i <= ocean.length; i++) {
-            System.out.printf("%" + fieldSpace + "s", i % 10 );  // do we want this...
-            //💥("collision")🌊("wave")☁("cloud")  🟦("blue square"), emoji icon possibilities
-        }
-        System.out.println();
+
+        printNumberLine(board.getSize(), fieldSpace);
 
         for (int i = 0; i < board.getSize(); i++) {
             String letter = String.valueOf(Character.toChars(65 + i));
             System.out.printf("%" + fieldSpace + "s", letter);
-
 
             if (hiddenIcon) {
                 for (int j = 0; j < board.getSize(); j++) {
@@ -87,11 +78,45 @@ public class Display {
             System.out.printf("%" + (fieldSpace) + "s", letter);
             System.out.println();
         }
-        System.out.print(padding);
-        for (int i = 1; i <= ocean.length; i++) {
-            System.out.printf("%" + fieldSpace + "s", i % 10);  // ... or this ? :D
+        printNumberLine(board.getSize(), fieldSpace);
+    }
+
+    public void printTwoBoards(Board shooter, Board target, boolean hiddenIcon) {
+        int fieldSpace = 2;
+
+        printNumberLine(shooter.getSize(), fieldSpace);
+
+        System.out.println();
+        Square[][] ocean = shooter.getOcean();
+        printNumberLine(ocean.length, fieldSpace);
+
+        for (int i = 0; i < shooter.getSize(); i++) {
+            String letter = String.valueOf(Character.toChars(65 + i));
+            System.out.printf("%" + fieldSpace + "s", letter);
+
+            if (hiddenIcon) {
+                for (int j = 0; j < shooter.getSize(); j++) {
+                    System.out.printf("%" + fieldSpace + "s", ocean[i][j].getHidden());
+                }
+            } else {
+                for (int j = 0; j < shooter.getSize(); j++) {
+                    System.out.printf("%" + fieldSpace + "s", ocean[i][j].getShown());
+                }
+            }
+
+            System.out.printf("%" + (fieldSpace) + "s", letter);
+            System.out.println();
+        }
+        printNumberLine(ocean.length, fieldSpace);
+    }
+
+    private void printNumberLine (int length, int fieldSpace) {
+        for (int i = 0; i < fieldSpace; i++) {
+            System.out.print(" ");
+        }
+        for (int i = 1; i <= length; i++) {
+            System.out.printf("%" + fieldSpace + "s", i % 10);
         }
         System.out.println();
     }
-
 }
