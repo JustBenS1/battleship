@@ -38,7 +38,7 @@ public class Player {
         this.currentHP = currentHP;
     }
 
-    public boolean isAlive() {
+    public boolean isPlayerAlive() {
         return currentHP > 0;
     }
 

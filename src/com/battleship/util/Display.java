@@ -5,6 +5,8 @@ import com.battleship.Board;
 import com.battleship.Player;
 import com.battleship.Square;
 
+import java.util.ArrayList;
+
 public class Display {
     private static Display single_instance = null;
 
@@ -19,6 +21,9 @@ public class Display {
     }
 
     public void printMessage(String message) {
+        System.out.print(message);
+    }
+    public void printMessage(int message) {
         System.out.print(message);
     }
 
@@ -47,9 +52,7 @@ public class Display {
 
                 startProcess.waitFor();
             }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        } catch (Exception e) {}
     }
 
     public void printBoard(Board board, boolean hiddenIcon) {
@@ -128,5 +131,17 @@ public class Display {
         printSpacing(fieldSpace * 2);
         System.out.printf("%-" + boardCharacterSize + "s", player2.getPlayerName());
         System.out.println();
+    }
+
+    public void showHighScores(ArrayList<Winner> highScores){
+        this.clear();
+        printMessageLine("Highest Scores so far:");
+        int i = 1;
+        for (Winner scoreHolder: highScores) {
+            printMessage(i + ".  " + scoreHolder.getName());
+            printMessageLine(",  Score : "+ scoreHolder.getScore());
+            i++;
+        }
+        printMessageLine("");
     }
 }

@@ -78,7 +78,7 @@ public class Game {
     }
 
     public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
-        String targetCoordinateInput = "";
+        String targetCoordinateInput;
         Coordinates targetCoordinate;
         boolean wasTargetValid = true;
         while (true) {
@@ -125,10 +125,23 @@ public class Game {
                     board.setOceanSquare(shipCurrentCellCoordinate, SquareStatus.SUNK);
                     shipSquare.setStatus(SquareStatus.SUNK);
                 }
+                if (!target.isPlayerAlive()){
+                    endgame.setEndMatch(true);
+                    endgame.setNewWinner(getWinnerName(target.getPlayerName()), roundCounter);
+                }
             } else {
                 board.setOceanSquare(targetCoordinate, SquareStatus.HIT);
                 targetShip.setShipSquareByCoordinates(targetCoordinate,SquareStatus.HIT);
             }
         }
+    }
+    public String getWinnerName(String loserName){
+        if (!player1.getPlayerName().equals(loserName)){
+            return player1.getPlayerName();
+        }else{
+            return player2.getPlayerName();
+        }
+
+
     }
 }
