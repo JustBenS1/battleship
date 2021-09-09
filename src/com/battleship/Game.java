@@ -4,7 +4,6 @@ import com.battleship.util.Coordinates;
 import com.battleship.util.Display;
 import com.battleship.util.Endgame;
 import com.battleship.util.Input;
-
 import java.util.ArrayList;
 
 
@@ -47,6 +46,8 @@ public class Game {
     }
 
     public void run() {
+        display.printBoardsHeaders(player1, player2, 2, 10);
+        display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, 2, 10);
         Coordinates targetCoordinate;
         while (!endgame.getIsEndMatch()) {
             System.out.println("i'm alive");
@@ -80,18 +81,18 @@ public class Game {
         System.out.println();
     }
 
-    public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
-        display.printBoard(target.getOcean(),false);
-        display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
+    public Coordinates getValidShot(Player player1, Player player2, String currentPlayer) {
+        display.printBoard(player2.getOcean(),false);
+        display.printMessageLine(currentPlayer + " : " + player1.getPlayerName() + "'s turn!");
         System.out.println("________________");
-        String targetCoordinateInput = "";
+        String targetCoordinateInput;
         Coordinates targetCoordinate;
         while (true) {
             targetCoordinateInput = input.getInput();
-            if (input.isCoordinateOnBoard(targetCoordinateInput, target.getOcean().getSize())) {
+            if (input.isCoordinateOnBoard(targetCoordinateInput, player2.getOcean().getSize())) {
 
                 targetCoordinate = input.convertToCoordinates(targetCoordinateInput);
-                if (target.getOcean().isSquareShootable(targetCoordinate)) {
+                if (player2.getOcean().isSquareShootable(targetCoordinate)) {
                     break;
                 }
             }
@@ -124,5 +125,4 @@ public class Game {
             }
         }
     }
-
 }
