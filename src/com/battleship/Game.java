@@ -44,11 +44,8 @@ public class Game {
 
     public void run() {
         while (!endgame.getIsEndMatch()) {
-            display.printMessageLine("Ship placement phase");
-            display.printBoardsHeaders(player1, player2, 2, 10);
-            display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, true);
+
             Coordinates targetCoordinate;
-            System.out.println("i'm alive");
             placeShips(player1);
             if (endgame.getIsEndMatch()) {
                 continue;

@@ -32,6 +32,7 @@ public class BoardFactory {
         while ((!isShipOnBoard || !areSurroundingsValid) && !endgame.getIsEndMatch()) {
 
             if (!isValidDirection){
+                printCurrentPlacerBoard();
                 display.printMessageLine("Direction was invalid");
             }
 
@@ -42,6 +43,7 @@ public class BoardFactory {
             while (!isValidPlacement && !endgame.getIsEndMatch()) {
                 isValidPlacement = getValidPlacement();
                 if (!isValidPlacement) {
+                    printCurrentPlacerBoard();
                     display.printMessageLine("Give a valid Coordinate!");
                 }
             }
@@ -59,6 +61,7 @@ public class BoardFactory {
 
             isShipOnBoard = checkShipInBoard(direction);
             if (! isShipOnBoard) {
+                printCurrentPlacerBoard();
                 display.printMessageLine("The ship would go off the board!");
                 continue;
             }
@@ -200,12 +203,7 @@ public class BoardFactory {
     public void run() {
         for (Ship ship : fleet) {
             display.clear();
-            display.printMessageLine("Ship placement phase");
-            if (player.getnThPlayer() == 1) {
-                display.printTwoBoards(player.getOcean(), player.getOcean(), false, true);
-            } else if (player.getnThPlayer() == 2) {
-                display.printTwoBoards(player.getOcean(), player.getOcean(), true, false);
-            }
+            printCurrentPlacerBoard();
             shipSize = ship.getSquares().size();
             placementValidation(ship);
             if (endgame.getIsEndMatch()){
@@ -214,5 +212,14 @@ public class BoardFactory {
         }
         player.setOcean(board);
         player.setFleet(fleet);
+    }
+
+    private void printCurrentPlacerBoard() {
+        display.printMessageLine(player.getPlayerName() + " (Player " + player.getnThPlayer() + ") It's your turn to place your Fleet!\n");
+        if (player.getnThPlayer() == 1) {
+            display.printTwoBoards(player.getOcean(), player.getOcean(), false, true);
+        } else if (player.getnThPlayer() == 2) {
+            display.printTwoBoards(player.getOcean(), player.getOcean(), true, false);
+        }
     }
 }

@@ -13,7 +13,7 @@ public class Player {
     private int currentHP;
     private final String playerName;
     private final int nThPlayer;
-    private final String[] choosePlayerNameText = {"Player"," , please provide pl name : "};
+    private final String[] choosePlayerNameText = {"Player"," , What is your name? : "};
     private Board ocean;
 
     public Player(ArrayList<Ship> fleet, int maxHP,  int size, int nThPlayer) {
