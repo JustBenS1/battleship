@@ -55,16 +55,16 @@ public class Display {
 
     public void printBoard(Board board, boolean hiddenIcon) {
 
-        int fieldSpace = 3;
+        int fieldSpace = 2;
 
-        String padding = "   ";
+        String padding = "  ";
 
 
         System.out.println();
         Square[][] ocean = board.getOcean();
         System.out.print(padding);
         for (int i = 1; i <= ocean.length; i++) {
-            System.out.printf("%" + fieldSpace + "s", i );  // do we want this...
+            System.out.printf("%" + fieldSpace + "s", i % 10 );  // do we want this...
             //💥("collision")🌊("wave")☁("cloud")  🟦("blue square"), emoji icon possibilities
         }
         System.out.println();
@@ -84,7 +84,7 @@ public class Display {
                 }
             }
 
-            System.out.printf("%" + (fieldSpace - 1) + "s", letter);
+            System.out.printf("%" + (fieldSpace) + "s", letter);
             System.out.println();
         }
         System.out.print(padding);
@@ -93,4 +93,5 @@ public class Display {
         }
         System.out.println();
     }
+
 }
