@@ -199,14 +199,14 @@ public class BoardFactory {
 
     public void run() {
         for (Ship ship : fleet) {
+            display.clear();
+            display.printMessageLine("Ship placement phase");
+            display.printBoard(board, false);
             shipSize = ship.getSquares().size();
-            System.out.println(shipSize);
             placementValidation(ship);
             if (endgame.getIsEndMatch()){
                 break;
             }
-            display.clear();
-            display.printBoard(board, false);
 
         }
         player.setOcean(board);
