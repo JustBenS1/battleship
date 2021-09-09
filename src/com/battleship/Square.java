@@ -33,8 +33,6 @@ public class Square {
         return status.getShownIcon();
     }
 
-
-
     public SquareStatus getStatus() {
         return status;
     }

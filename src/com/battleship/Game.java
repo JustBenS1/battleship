@@ -85,10 +85,10 @@ public class Game {
             display.clear();
             if (shooter.getnThPlayer() == 1) {
                 display.printBoardsHeaders(player1, player2, 2, 10);
-                display.printTwoBoards(shooter.getOcean(), target.getOcean(), false, false);
+                display.printTwoBoards(shooter.getOcean(), target.getOcean(), true, true);
             } else if (shooter.getnThPlayer() == 2) {
                 display.printBoardsHeaders(player1, player2, 2, 10);
-                display.printTwoBoards(target.getOcean(), shooter.getOcean(), false, false);
+                display.printTwoBoards(target.getOcean(), shooter.getOcean(), true, true);
             }
             display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
             if (!wasTargetValid){
@@ -134,6 +134,11 @@ public class Game {
                 if (!target.isPlayerAlive()){
                     endgame.setEndMatch(true);
                     endgame.setNewWinner(getWinnerName(target.getPlayerName()), roundCounter);
+                    display.clear();
+
+                    display.printBoardsHeaders(player1, player2, 2, 10);
+                    display.printTwoBoards(player1.getOcean(),player2.getOcean(),false,false);
+                    display.showWinnerStats(endgame.getWinnerData());
                 }
             } else {
                 board.setOceanSquare(targetCoordinate, SquareStatus.HIT);

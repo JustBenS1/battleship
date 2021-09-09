@@ -34,12 +34,8 @@ public class Endgame {
         this.isEndMatch = isEndMatch;
     }
 
-    public Winner getWinnerData(Winner winner) {
+    public Winner getWinnerData() {
         return winner;
-    }
-
-    public int getBoardSize() {
-        return boardSize;
     }
 
     public void setBoardSize(int boardSize) {

@@ -45,10 +45,6 @@ public class Input {
         }
     }
 
-    public String getPlayerName() {
-        return "";
-    }
-
     public boolean isStringOnlySpace (String string) {
         for (int i = 0; i < string.length(); i++) {
             if (string.charAt(i) != ' ') {

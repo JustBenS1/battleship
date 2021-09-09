@@ -130,7 +130,6 @@ public class BoardFactory {
             display.clear();
             return false;
         }
-        //direction
         startCoordinate = coordinate;
         return true;
     }
@@ -158,12 +157,8 @@ public class BoardFactory {
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
                 }
-
-
                 this.endCoordinate = this.startCoordinate;
                 this.startCoordinate = checkCoordinate;
-
-
             }
             case "NORTH" -> {
                 checkCoordinate = new Coordinates(newX - shipSize + 1, newY);
@@ -256,16 +251,14 @@ public class BoardFactory {
                     break;
                 }
             }
-            player.setOcean(board);
-            player.setFleet(fleet);
         } else {
             for (Ship ship : fleet) {
                 shipSize = ship.getSquares().size();
                 placementValidationRandom(ship);
             }
-            player.setOcean(board);
-            player.setFleet(fleet);
         }
+        player.setOcean(board);
+        player.setFleet(fleet);
     }
 
     private void printCurrentPlacerBoard() {

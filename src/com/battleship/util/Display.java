@@ -1,6 +1,5 @@
 package com.battleship.util;
 
-
 import com.battleship.Board;
 import com.battleship.Player;
 import com.battleship.Square;
@@ -23,9 +22,6 @@ public class Display {
     public void printMessage(String message) {
         System.out.print(message);
     }
-    public void printMessage(int message) {
-        System.out.print(message);
-    }
 
     public void printMessageLine(String message) {
         System.out.println(message);
@@ -40,7 +36,7 @@ public class Display {
 
     public void clear() {
         try {
-            String operatingSystem = System.getProperty("os.name"); //Check the current operating system
+            String operatingSystem = System.getProperty("os.name");
 
             if (operatingSystem.contains("Windows")) {
                 ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "cls");
@@ -53,22 +49,6 @@ public class Display {
                 startProcess.waitFor();
             }
         } catch (Exception e) {}
-    }
-
-    public void printBoard(Board board, boolean hiddenIcon) {
-
-        int fieldSpace = 2;
-
-        printNumberLine(board.getSize(), fieldSpace);
-        System.out.println();
-
-        for (int i = 0; i < board.getSize(); i++) {
-            printFieldsAndLetters(board, hiddenIcon, fieldSpace, i);
-            System.out.println();
-        }
-
-        printNumberLine(board.getSize(), fieldSpace);
-        System.out.println();
     }
 
     public void printTwoBoards(Board board1, Board board2, boolean isHiddenIcon1, boolean isHiddenIcon2) {
@@ -146,4 +126,11 @@ public class Display {
         }
         printMessageLine("");
     }
+
+    public void showWinnerStats(Winner winner){
+        printMessageLine("");
+        printMessageLine(winner.getName() + " won this round!  With " + winner.getScore() + " points.");
+        printMessageLine("");
+    }
+
 }

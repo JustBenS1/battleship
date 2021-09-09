@@ -1,6 +1,5 @@
 package com.battleship;
 
-import com.battleship.Square;
 import com.battleship.util.Coordinates;
 
 import java.util.ArrayList;

@@ -1,6 +1,3 @@
-//TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
-//TODO endgames
-//TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
 package com.battleship;
 
 import com.battleship.util.*;
@@ -49,14 +46,15 @@ public class Battleship {
         display.clear();
         if (mainMenuOption == 0){
             endgame.setEndgame(true);
-        }else if (mainMenuOption == 1){//newgame
+        }else if (mainMenuOption == 1){
             int sizeOption = sizeBuilder();
             int placementOption = menuBuilder(placementTypeOptions);
             isRandomPlacement = placementOption == 2;
             if(sizeOption == 0){
-                menuSettings();//mmainmenu
+                menuSettings();
             }else{
                 boardSize = sizeOption;
+                endgame.setBoardSize(boardSize);
             }
         }else{
             display.showHighScores(endgame.getHighScores());
@@ -72,6 +70,7 @@ public class Battleship {
             Game game = new Game(boardSize, isRandomPlacement);
             display.clear();
             game.run();
+
             if(menuBuilder(restartMenuOptions) == 0){
                 endgame.setEndgame(true);
             }else{
