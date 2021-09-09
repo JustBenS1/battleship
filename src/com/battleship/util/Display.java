@@ -55,22 +55,6 @@ public class Display {
         } catch (Exception e) {}
     }
 
-    public void printBoard(Board board, boolean hiddenIcon) {
-
-        int fieldSpace = 2;
-
-        printNumberLine(board.getSize(), fieldSpace);
-        System.out.println();
-
-        for (int i = 0; i < board.getSize(); i++) {
-            printFieldsAndLetters(board, hiddenIcon, fieldSpace, i);
-            System.out.println();
-        }
-
-        printNumberLine(board.getSize(), fieldSpace);
-        System.out.println();
-    }
-
     public void printTwoBoards(Board board1, Board board2, boolean isHiddenIcon1, boolean isHiddenIcon2) {
         int fieldSpace = 2;
         int spacing = 10;
@@ -135,14 +119,18 @@ public class Display {
         System.out.println();
     }
 
-    public void showHighScores(ArrayList<Winner> highScores){
+    public void showHighScores(ArrayList<Winner> highScores) {
         this.clear();
         printMessageLine("Highest Scores so far:");
-        int i = 1;
-        for (Winner scoreHolder: highScores) {
-            printMessage(i + ".  " + scoreHolder.getName());
-            printMessageLine(",  Score : "+ scoreHolder.getScore());
-            i++;
+        if (highScores.size() == 0) {
+            printMessageLine("You have to finish a game first.");
+        } else {
+            int i = 1;
+            for (Winner scoreHolder : highScores) {
+                printMessage(i + ".  " + scoreHolder.getName());
+                printMessageLine(",  Score : " + scoreHolder.getScore());
+                i++;
+            }
         }
         printMessageLine("");
     }

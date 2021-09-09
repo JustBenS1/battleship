@@ -93,7 +93,7 @@ public class BoardFactory {
 
             while (!isValidPlacement) {
                 Coordinates randomCoordinates = generateRandomStartCoordinate();
-                isValidPlacement = board.isSquareEmpty(randomCoordinates);
+                isValidPlacement = (board.isSquareEmpty(randomCoordinates) && board.areNeighboursEmpty(randomCoordinates));
                 if (!isValidPlacement) {
                     break;
                 }
@@ -179,6 +179,7 @@ public class BoardFactory {
                     return false;
                 }
                 this.endCoordinate = checkCoordinate;
+                System.out.println(endCoordinate.getX() + " X " + endCoordinate.getY() + " Y  (east) ");
             }
             case "SOUTH" -> {
                 checkCoordinate = new Coordinates(newX + shipSize - 1, newY);
@@ -186,6 +187,7 @@ public class BoardFactory {
                     return false;
                 }
                 this.endCoordinate = checkCoordinate;
+                System.out.println(endCoordinate.getX() + " X " + endCoordinate.getY() + " Y  (south) ");
             }
         }
         display.clear();
@@ -292,8 +294,8 @@ public class BoardFactory {
     }
 
     private String generateRandomDirection() {
-        int direction = getRandomInt(4);
-        String[] directions = {"NORTH", "WEST", "SOUTH", "EAST"};
+        int direction = getRandomInt(2);
+        String[] directions = {"SOUTH", "EAST"};
         return directions[direction];
     }
 }
