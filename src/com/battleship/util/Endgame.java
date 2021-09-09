@@ -29,4 +29,5 @@ public class Endgame {
     public void setEndMatch(boolean isEndMatch) {
         this.isEndMatch = isEndMatch;
     }
+    //endgame scenarios check
 }

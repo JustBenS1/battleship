@@ -1,5 +1,6 @@
 package com.battleship;
 
+import com.battleship.util.Coordinates;
 import com.battleship.util.Display;
 import com.battleship.util.Input;
 
@@ -14,11 +15,11 @@ public class Player {
     private final String[] choosePlayerNameText = {"Please, provide your name : "};
     private Board ocean;
 
-    public Player(int maxHP, ArrayList<Ship> fleet, int size) {
+    public Player(ArrayList<Ship> fleet, int maxHP,  int size) {
         this.currentHP = maxHP;
         this.fleet = fleet;
         ocean = new Board(size);
-        playerName = getPlayerName();
+        playerName = getSetPlayerName();
     }
 
     public ArrayList<Ship> getFleet() {
@@ -50,6 +51,10 @@ public class Player {
     }
 
     public String getPlayerName() {
+        return playerName;
+    }
+
+    public String getSetPlayerName() {
         display.printMenuOptions(choosePlayerNameText,"");
         String userInput = input.getInput();
         if (input.isStringOnlySpace(userInput) || userInput.equals("")) {
@@ -57,4 +62,35 @@ public class Player {
         }
         return userInput;
     }
+
+    public Ship getShipByCoordinate(Coordinates coordinate) {
+        Ship shipOut = new Ship(0);
+        for (Ship ship : fleet) {
+            for (Square square : ship.getSquares()) {
+                if (square.getCoordinates().getX() == coordinate.getX() &&
+                        square.getCoordinates().getY() == coordinate.getY()) {
+                    shipOut = ship;
+                    break;
+                }
+            }
+            if (!shipOut.getSquares().isEmpty()){
+                break;
+            }
+        }
+        return shipOut;
+    }
+
+    public boolean isShipBarelyAlive (Ship ship) {
+        int hpCounter = 0;
+        for (Square square: ship.getSquares()) {
+            if (square.getStatus().name().equals("SHIP")) {
+                hpCounter++;
+                if (hpCounter > 1) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

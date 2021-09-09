@@ -24,13 +24,25 @@ public class Board {
         return this.ocean;
     }
 
-    public void setOceanField(Coordinates coordinates, Square newSquare) {
+    public void setOceanSquare(Coordinates coordinates, SquareStatus newStatus){
+        this.ocean[coordinates.getX()][coordinates.getY()].setStatus(newStatus);
+    }
+    public void setOceanSquare(Coordinates coordinates, Square newSquare) {
         this.ocean[coordinates.getX()][coordinates.getY()] = newSquare;
+    }
+
+    public Square getOceanSquare(Coordinates coordinate) {
+        return this.ocean[coordinate.getX()][coordinate.getY()];
     }
 
     public boolean isSquareEmpty (Coordinates coordinate) {
         Square square = this.ocean[coordinate.getX()][coordinate.getY()];
         return square.getStatus().name().equals("EMPTY");
+    }
+
+    public boolean isSquareShootable (Coordinates coordinate) {
+        Square square = this.ocean[coordinate.getX()][coordinate.getY()];
+        return square.getStatus().name().equals("EMPTY") || square.getStatus().name().equals("SHIP");
     }
 
     public boolean areNeighboursEmpty(Coordinates coordinate){

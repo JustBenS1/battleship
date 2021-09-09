@@ -20,9 +20,20 @@ public class Square {
         this.status = SquareStatus.EMPTY;
     }
 
-    public String getIcon () {
-        return status.getCharacter();
+    public Square(Coordinates coordinates, SquareStatus status) {
+        this.coordinates = new Coordinates(coordinates.getX(), coordinates.getY());
+        this.status = status;
     }
+
+    public String getHidden () {
+        return status.getHiddenIcon();
+    }
+
+    public String getShown() {
+        return status.getShownIcon();
+    }
+
+
 
     public SquareStatus getStatus() {
         return status;
@@ -30,6 +41,10 @@ public class Square {
 
     public void setStatus(SquareStatus status) {
         this.status = status;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
 }
 

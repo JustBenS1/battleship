@@ -26,10 +26,18 @@ public class BoardFactory {
     public void placementValidation(Ship ship) {
         boolean isShipOnBoard = false;
         boolean areSurroundingsValid = false;
+        boolean isValidPlacement = false;
+        boolean isValidDirection = true;
+
         while ((!isShipOnBoard || !areSurroundingsValid) && !endgame.getIsEndMatch()) {
 
-            boolean isValidPlacement = false;
-            boolean isValidDirection = false;
+            if (!isValidDirection){
+                display.printMessageLine("Direction was invalid");
+            }
+
+            isValidPlacement = false;
+            isValidDirection = false;
+
 
             while (!isValidPlacement && !endgame.getIsEndMatch()) {
                 isValidPlacement = getValidPlacement();
@@ -41,11 +49,9 @@ public class BoardFactory {
                 continue;
             }
 
-            while (!isValidDirection && !endgame.getIsEndMatch()) {
-                isValidDirection = getValidDirection();
-                if (!isValidDirection) {
-                    display.printMessageLine("Type a valid direction!");
-                }
+            isValidDirection = getValidDirection();
+            if (!isValidDirection) {
+                continue;
             }
             if (endgame.getIsEndMatch()){
                 continue;
@@ -68,19 +74,20 @@ public class BoardFactory {
         display.printMessage("Please give a start coordinate (eg.: A1) : ");
         String userInput = input.getInput();
         if(input.inputIsQuit(userInput)){
-           return false;
+            display.clear();
+            return false;
         }
-        display.clear();
         if (!input.isCoordinateOnBoard(userInput, board.getSize())) {
+            display.clear();
             return false;
         }
         Coordinates coordinate = input.convertToCoordinates(userInput);
         if (!board.isSquareEmpty(coordinate) || !board.areNeighboursEmpty(coordinate)) {
+            display.clear();
             return false;
         }
         //direction
         startCoordinate = coordinate;
-        display.clear();
         return true;
     }
 
@@ -88,8 +95,8 @@ public class BoardFactory {
         display.printMessage("Please give a direction (North, East, South, West) : ");
         String direction = input.getInput().toUpperCase();
         input.inputIsQuit(direction);
-        display.clear();
         if (!Input.getInstance().isValidDirection(direction)) {
+            display.clear();
             return false;
         }
         this.direction = direction;
@@ -111,7 +118,6 @@ public class BoardFactory {
                 this.startCoordinate = checkCoordinate;
             }
             case "NORTH" -> {
-                System.out.println("#faszkivan");
                 checkCoordinate = new Coordinates(newX - shipSize + 1, newY);
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
@@ -171,12 +177,12 @@ public class BoardFactory {
         int endX = endCoordinate.getX();
         int endY = endCoordinate.getY();
         Coordinates coordinate = new Coordinates(baseX, baseY);
-        ArrayList<Square> newShipSquares = new ArrayList<Square>();
+        ArrayList<Square> newShipSquares = new ArrayList<>();
         if (baseX == endX) {
             for (int i = 0; i <= endY-baseY; i++) {
                 coordinate.setY(baseY + i);
                 newSquare = new Square(coordinate);
-                board.setOceanField(coordinate, newSquare);
+                board.setOceanSquare(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
         } else {
@@ -184,7 +190,7 @@ public class BoardFactory {
                 coordinate = new Coordinates(baseX + i, baseY);
                 coordinate.setX(baseX + i);
                 newSquare = new Square(coordinate);
-                board.setOceanField(coordinate, newSquare);
+                board.setOceanSquare(coordinate, newSquare);
                 newShipSquares.add(newSquare);
             }
         }
@@ -200,7 +206,7 @@ public class BoardFactory {
                 break;
             }
             display.clear();
-            display.printBoard(board);
+            display.printBoard(board, false);
 
         }
         player.setOcean(board);
