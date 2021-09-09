@@ -4,7 +4,6 @@ import com.battleship.util.Coordinates;
 import com.battleship.util.Display;
 import com.battleship.util.Endgame;
 import com.battleship.util.Input;
-
 import java.util.ArrayList;
 
 
@@ -36,8 +35,6 @@ public class Game {
         for (ShipType typeOfShip : ShipType.values()) {
             fleet.add(new Ship(typeOfShip.getLength()));
             maxHp += typeOfShip.getLength();
-            System.out.println(typeOfShip.getLength());
-            System.out.println(typeOfShip);
         }
 
         this.maxHp = maxHp;
@@ -46,6 +43,8 @@ public class Game {
     }
 
     public void run() {
+        display.printBoardsHeaders(player1, player2, 2, 10);
+        display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, 2, 10);
         Coordinates targetCoordinate;
         while (!endgame.getIsEndMatch()) {
             System.out.println("i'm alive");
@@ -133,5 +132,4 @@ public class Game {
             }
         }
     }
-
 }

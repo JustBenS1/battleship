@@ -1,8 +1,6 @@
-//TODO placement good coordinate with bad direction -done
-// does not repeat getCoordinate when already shot at cell -done
-//TODO print emojis sizes rearrange misplace - GERGŐ
-//TODO same target (hit/miss) shoot again - bad (forever while loop) - BENCE -done
+//TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
 //TODO Sink feature
+//TODO same target (hit/miss) shoot again - bad (forever while loop) - BENCE
 //TODO endgames
 //TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
 package com.battleship;
@@ -14,10 +12,10 @@ public class Battleship {
     public static Input input = Input.getInstance();
     private static final String[] mainMenuOptions = {"New Game : 1", "High Scores : 2", "Exit : 0"};
     private static final String[] restartMenuOptions = {"Main Menu : 1", "Exit : 0"};
-    private static final String[] getBoardSizeText = {"Please provide board size (between 5-25)", "Back (0)"};
+    private static final String[] getBoardSizeText = {"Please provide board size (between 10-25)", "Back (0)"};
     private static final String inputNumberPrompt = "Please choose an option (number required) : ";
 
-    private static final int minSize = 5;
+    private static final int minSize = 10;
     private static final int maxSize = 25;
     private static Endgame endgame = Endgame.getInstance();
 
