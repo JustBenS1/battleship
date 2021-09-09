@@ -115,14 +115,18 @@ public class Display {
         System.out.println();
     }
 
-    public void showHighScores(ArrayList<Winner> highScores){
+    public void showHighScores(ArrayList<Winner> highScores) {
         this.clear();
         printMessageLine("Highest Scores so far:");
-        int i = 1;
-        for (Winner scoreHolder: highScores) {
-            printMessage(i + ".  " + scoreHolder.getName());
-            printMessageLine(",  Score : "+ scoreHolder.getScore());
-            i++;
+        if (highScores.size() == 0) {
+            printMessageLine("You have to finish a game first.");
+        } else {
+            int i = 1;
+            for (Winner scoreHolder : highScores) {
+                printMessage(i + ".  " + scoreHolder.getName());
+                printMessageLine(",  Score : " + scoreHolder.getScore());
+                i++;
+            }
         }
         printMessageLine("");
     }
