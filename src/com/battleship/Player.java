@@ -12,13 +12,15 @@ public class Player {
     private ArrayList<Ship> fleet;
     private int currentHP;
     private final String playerName;
-    private final String[] choosePlayerNameText = {"Player"," , please provide pl name : "};
+    private final int nThPlayer;
+    private final String[] choosePlayerNameText = {"Player"," , What is your name? : "};
     private Board ocean;
 
     public Player(ArrayList<Ship> fleet, int maxHP,  int size, int nThPlayer) {
         this.currentHP = maxHP;
         this.fleet = fleet;
         ocean = new Board(size);
+        this.nThPlayer = nThPlayer;
         playerName = getSetPlayerName(nThPlayer);
     }
 
@@ -52,6 +54,10 @@ public class Player {
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public int getnThPlayer() {
+        return nThPlayer;
     }
 
     public String getSetPlayerName(int nthPlayer) {
