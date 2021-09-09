@@ -68,22 +68,24 @@ public class Display {
         System.out.println();
     }
 
-    public void printTwoBoards(Board shooter, Board target, boolean isHiddenIcon, int fieldSpace, int spacing) {
-        printNumberLine(shooter.getSize(), fieldSpace);
+    public void printTwoBoards(Board board1, Board board2, boolean isHiddenIcon1, boolean isHiddenIcon2) {
+        int fieldSpace = 2;
+        int spacing = 10;
+        printNumberLine(board1.getSize(), fieldSpace);
         printSpacing(spacing);
-        printNumberLine(target.getSize(), fieldSpace);
+        printNumberLine(board2.getSize(), fieldSpace);
         System.out.println();
 
-        for (int i = 0; i < shooter.getSize(); i++) {
-            printFieldsAndLetters(shooter, true, fieldSpace, i);
+        for (int i = 0; i < board1.getSize(); i++) {
+            printFieldsAndLetters(board1, isHiddenIcon1, fieldSpace, i);
             printSpacing(spacing);
-            printFieldsAndLetters(target, isHiddenIcon, fieldSpace, i);
+            printFieldsAndLetters(board2, isHiddenIcon2, fieldSpace, i);
             System.out.println();
         }
 
-        printNumberLine(shooter.getSize(), fieldSpace);
+        printNumberLine(board1.getSize(), fieldSpace);
         printSpacing(spacing);
-        printNumberLine(target.getSize(), fieldSpace);
+        printNumberLine(board2.getSize(), fieldSpace);
         System.out.println();
     }
 
@@ -123,7 +125,7 @@ public class Display {
     public void printBoardsHeaders(Player player1, Player player2, int fieldSpace, int spacing) {
         int boardCharacterSize = player1.getOcean().getSize() * fieldSpace;
         printSpacing(fieldSpace * 2);
-        System.out.printf("%-" + (boardCharacterSize)  + "s", player1.getPlayerName());
+        System.out.printf("%-" + boardCharacterSize  + "s", player1.getPlayerName());
         printSpacing(spacing);
         printSpacing(fieldSpace * 2);
         System.out.printf("%-" + boardCharacterSize + "s", player2.getPlayerName());

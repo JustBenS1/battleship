@@ -46,7 +46,7 @@ public class Game {
         while (!endgame.getIsEndMatch()) {
             display.printMessageLine("Ship placement phase");
             display.printBoardsHeaders(player1, player2, 2, 10);
-            display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, 2, 10);
+            display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, true);
             Coordinates targetCoordinate;
             System.out.println("i'm alive");
             placeShips(player1);
@@ -78,12 +78,18 @@ public class Game {
     }
 
     public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
-        String targetCoordinateInput = "";
+        String targetCoordinateInput;
         Coordinates targetCoordinate;
         boolean wasTargetValid = true;
         while (true) {
             display.clear();
-            display.printBoard(target.getOcean(),false);
+            if (shooter.getnThPlayer() == 1) {
+                display.printBoardsHeaders(player1, player2, 2, 10);
+                display.printTwoBoards(shooter.getOcean(), target.getOcean(), true, true);
+            } else if (shooter.getnThPlayer() == 2) {
+                display.printBoardsHeaders(player1, player2, 2, 10);
+                display.printTwoBoards(target.getOcean(), shooter.getOcean(), true, true);
+            }
             display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
             if (!wasTargetValid){
                 display.printMessageLine("Last input was invalid!");

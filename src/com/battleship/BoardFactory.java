@@ -26,7 +26,7 @@ public class BoardFactory {
     public void placementValidation(Ship ship) {
         boolean isShipOnBoard = false;
         boolean areSurroundingsValid = false;
-        boolean isValidPlacement = false;
+        boolean isValidPlacement;
         boolean isValidDirection = true;
 
         while ((!isShipOnBoard || !areSurroundingsValid) && !endgame.getIsEndMatch()) {
@@ -194,23 +194,25 @@ public class BoardFactory {
                 newShipSquares.add(newSquare);
             }
         }
-        ship.setSquares(newShipSquares);//return ?
+        ship.setSquares(newShipSquares);
     }
 
     public void run() {
         for (Ship ship : fleet) {
             display.clear();
             display.printMessageLine("Ship placement phase");
-            display.printBoard(board, false);
+            if (player.getnThPlayer() == 1) {
+                display.printTwoBoards(player.getOcean(), player.getOcean(), false, true);
+            } else if (player.getnThPlayer() == 2) {
+                display.printTwoBoards(player.getOcean(), player.getOcean(), true, false);
+            }
             shipSize = ship.getSquares().size();
             placementValidation(ship);
             if (endgame.getIsEndMatch()){
                 break;
             }
-
         }
         player.setOcean(board);
         player.setFleet(fleet);
-        // return ?
     }
 }
