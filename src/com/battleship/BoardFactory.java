@@ -3,9 +3,11 @@ package com.battleship;
 import com.battleship.util.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BoardFactory {
     private Player player;
+    private boolean isRandomPlacement;
     public Display display = Display.getInstance();
     public Input input = Input.getInstance();
     private ArrayList<Ship> fleet;
@@ -17,8 +19,9 @@ public class BoardFactory {
     private Endgame endgame = Endgame.getInstance();
 
 
-    public BoardFactory(Player player) {
+    public BoardFactory(Player player, boolean isRandomPlacement) {
         this.player = player;
+        this.isRandomPlacement = isRandomPlacement;
         this.fleet = this.player.getFleet();
         this.board = this.player.getOcean();
     }
@@ -52,6 +55,7 @@ public class BoardFactory {
             }
 
             isValidDirection = getValidDirection();
+
             if (!isValidDirection) {
                 continue;
             }
@@ -66,10 +70,47 @@ public class BoardFactory {
                 continue;
             }
             areSurroundingsValid = checkSurroundings();
+            if (! areSurroundingsValid) {
+                printCurrentPlacerBoard();
+                display.printMessageLine("Other ship is too close!");
+
+            }
         }
         if (!endgame.getIsEndMatch()){
             placeShipOnBoard(ship);
         }
+
+    }
+
+    public void placementValidationRandom(Ship ship) {
+        boolean isShipOnBoard = false;
+        boolean areSurroundingsValid = false;
+        boolean isValidPlacement = false;
+
+        String randomDirection = "EAST";
+
+        while (!isShipOnBoard || !areSurroundingsValid) {
+
+            while (!isValidPlacement) {
+                Coordinates randomCoordinates = generateRandomStartCoordinate();
+                isValidPlacement = board.isSquareEmpty(randomCoordinates);
+                if (!isValidPlacement) {
+                    break;
+                }
+                randomDirection = generateRandomDirection();
+
+                this.startCoordinate = randomCoordinates;
+            }
+            isShipOnBoard = checkShipInBoard(randomDirection);
+            if (!isShipOnBoard) {
+                isValidPlacement = false;
+            }
+            areSurroundingsValid = checkSurroundings();
+            if (!areSurroundingsValid) {
+                isValidPlacement = false;
+            }
+        }
+        placeShipOnBoard(ship);
 
     }
 
@@ -117,8 +158,12 @@ public class BoardFactory {
                 if (!isEndOnBoard(checkCoordinate)) {
                     return false;
                 }
+
+
                 this.endCoordinate = this.startCoordinate;
                 this.startCoordinate = checkCoordinate;
+
+
             }
             case "NORTH" -> {
                 checkCoordinate = new Coordinates(newX - shipSize + 1, newY);
@@ -151,14 +196,14 @@ public class BoardFactory {
         Coordinates coordinate;
         if (startCoordinate.getX() == endCoordinate.getX()) {
             for (int i = startCoordinate.getY(); i <= endCoordinate.getY(); i++) {
-                coordinate = new Coordinates(startCoordinate.getX(), startCoordinate.getY() + i);
+                coordinate = new Coordinates(startCoordinate.getX(), i);
                 if (!board.areNeighboursEmpty(coordinate)) {
                     return false;
                 }
             }
         } else {
             for (int i = startCoordinate.getX(); i <= endCoordinate.getX(); i++) {
-                coordinate = new Coordinates(startCoordinate.getX() + i, startCoordinate.getY());
+                coordinate = new Coordinates(i, startCoordinate.getY());
                 if (!board.areNeighboursEmpty(coordinate)) {
                     return false;
                 }
@@ -201,17 +246,26 @@ public class BoardFactory {
     }
 
     public void run() {
-        for (Ship ship : fleet) {
-            display.clear();
-            printCurrentPlacerBoard();
-            shipSize = ship.getSquares().size();
-            placementValidation(ship);
-            if (endgame.getIsEndMatch()){
-                break;
+        if (!isRandomPlacement) {
+            for (Ship ship : fleet) {
+                display.clear();
+                printCurrentPlacerBoard();
+                shipSize = ship.getSquares().size();
+                placementValidation(ship);
+                if (endgame.getIsEndMatch()){
+                    break;
+                }
             }
+            player.setOcean(board);
+            player.setFleet(fleet);
+        } else {
+            for (Ship ship : fleet) {
+                shipSize = ship.getSquares().size();
+                placementValidationRandom(ship);
+            }
+            player.setOcean(board);
+            player.setFleet(fleet);
         }
-        player.setOcean(board);
-        player.setFleet(fleet);
     }
 
     private void printCurrentPlacerBoard() {
@@ -221,5 +275,25 @@ public class BoardFactory {
         } else if (player.getnThPlayer() == 2) {
             display.printTwoBoards(player.getOcean(), player.getOcean(), true, false);
         }
+    }
+
+    private int getRandomInt(int topBound) {
+        Random random = new Random();
+        return random.nextInt(topBound);
+    }
+
+    private Coordinates generateRandomStartCoordinate() {
+
+        Coordinates coordinate = new Coordinates(getRandomInt(board.getSize()), getRandomInt(board.getSize()));
+        while (!board.isSquareEmpty(coordinate) || !board.areNeighboursEmpty(coordinate)) {
+            coordinate = new Coordinates(getRandomInt(board.getSize()), getRandomInt(board.getSize()));
+        }
+        return coordinate;
+    }
+
+    private String generateRandomDirection() {
+        int direction = getRandomInt(4);
+        String[] directions = {"NORTH", "WEST", "SOUTH", "EAST"};
+        return directions[direction];
     }
 }

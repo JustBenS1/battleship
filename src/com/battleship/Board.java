@@ -47,19 +47,20 @@ public class Board {
 
     public boolean areNeighboursEmpty(Coordinates coordinate){
         int[][] differences = new int[][] {
-                {1,1},
-                {-1,-1},
-                {1,-1},
-                {-1,1},
+                {1,0},
+                {-1,0},
+                {0,-1},
+                {0,1},
         };
 
-        for (int i = 0; i < differences[i].length; i++) {
-            try{
-                Coordinates checkCoordinate = new Coordinates(coordinate.getX() + differences[i][0], coordinate.getY()+differences[i][1]);
-                if (!isSquareEmpty(checkCoordinate)){
+        for (int[] difference : differences) {
+            try {
+                Coordinates checkCoordinate = new Coordinates(coordinate.getX() + difference[0], coordinate.getY() + difference[1]);
+                if (!isSquareEmpty(checkCoordinate)) {
                     return false;
                 }
-            }catch(Exception e){}
+            } catch (Exception e) {
+            }
         }
         return true;
     }

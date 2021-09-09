@@ -11,6 +11,7 @@ public class Battleship {
     private static final String[] mainMenuOptions = {"New Game : 1", "High Scores : 2", "Exit : 0"};
     private static final String[] restartMenuOptions = {"Main Menu : 1", "Exit : 0"};
     private static final String[] getBoardSizeText = {"Please provide board size (between 10-25)", "Back (0)"};
+    private static final String[] placementTypeOptions = {"Manual placement : 1", "Random placement : 2", "Back(0)" };
     private static final String inputNumberPrompt = "Please choose an option (number required) : ";
 
     private static final int minSize = 10;
@@ -18,6 +19,7 @@ public class Battleship {
     private static Endgame endgame = Endgame.getInstance();
 
     private static int boardSize;
+    private static boolean isRandomPlacement;
 
 
     public static int menuBuilder(String[] menuOptions){
@@ -25,7 +27,6 @@ public class Battleship {
         while(!input.checkMainInput(userInput, menuOptions.length)){
             display.printMenuOptions(menuOptions, inputNumberPrompt);
             userInput = input.getInput();
-            display.printMessageLine("");
             display.clear();
         }
         return Integer.parseInt(userInput);
@@ -48,13 +49,14 @@ public class Battleship {
         display.clear();
         if (mainMenuOption == 0){
             endgame.setEndgame(true);
-        }else if (mainMenuOption == 1){//newGame
+        }else if (mainMenuOption == 1){//newgame
             int sizeOption = sizeBuilder();
+            int placementOption = menuBuilder(placementTypeOptions);
+            isRandomPlacement = placementOption == 2;
             if(sizeOption == 0){
-                menuSettings();//mainMenu
+                menuSettings();//mmainmenu
             }else{
                 boardSize = sizeOption;
-                //endgame.setBoardSize(boardSize);
             }
         }else{
             display.showHighScores(endgame.getHighScores());
@@ -67,7 +69,7 @@ public class Battleship {
         display.clear();
         while(!endgame.getIsEndgame()){
             menuSettings();
-            Game game = new Game(boardSize);
+            Game game = new Game(boardSize, isRandomPlacement);
             display.clear();
             game.run();
             if(menuBuilder(restartMenuOptions) == 0){

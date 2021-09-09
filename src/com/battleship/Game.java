@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Game {
     private final int size;
+    private final boolean isRandomPlacement;
     private Player player1;
     private Player player2;
     private int maxHp;
@@ -21,8 +22,9 @@ public class Game {
         return size;
     }
 
-    public Game(int size) {
+    public Game(int size, boolean isRandomPlacement) {
         this.size = size;
+        this.isRandomPlacement = isRandomPlacement;
 
         player1 = new Player(createShipList(), maxHp, getSize(), 1);
         player2 = new Player(createShipList(), maxHp, getSize(),2);
@@ -46,11 +48,11 @@ public class Game {
         while (!endgame.getIsEndMatch()) {
 
             Coordinates targetCoordinate;
-            placeShips(player1);
+            placeShips(player1, isRandomPlacement);
             if (endgame.getIsEndMatch()) {
                 continue;
             }
-            placeShips(player2);
+            placeShips(player2, isRandomPlacement);
             if (endgame.getIsEndMatch()) {
                 continue;
             }
@@ -69,23 +71,24 @@ public class Game {
         }
     }
 
-    public void placeShips(Player player) {
-        BoardFactory boardFactory = new BoardFactory(player);
+    public void placeShips(Player player, boolean isRandomPlacement) {
+        BoardFactory boardFactory = new BoardFactory(player, isRandomPlacement);
         boardFactory.run();
     }
 
     public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
         String targetCoordinateInput;
-        Coordinates targetCoordinate;
+        Coordinates targetCoordinate = new Coordinates(0, 0);
         boolean wasTargetValid = true;
-        while (true) {
+
+        while (!endgame.getIsEndMatch()) {
             display.clear();
             if (shooter.getnThPlayer() == 1) {
                 display.printBoardsHeaders(player1, player2, 2, 10);
-                display.printTwoBoards(shooter.getOcean(), target.getOcean(), true, true);
+                display.printTwoBoards(shooter.getOcean(), target.getOcean(), false, false);
             } else if (shooter.getnThPlayer() == 2) {
                 display.printBoardsHeaders(player1, player2, 2, 10);
-                display.printTwoBoards(target.getOcean(), shooter.getOcean(), true, true);
+                display.printTwoBoards(target.getOcean(), shooter.getOcean(), false, false);
             }
             display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
             if (!wasTargetValid){
@@ -97,7 +100,9 @@ public class Game {
 
             targetCoordinateInput = input.getInput();
             if (input.isCoordinateOnBoard(targetCoordinateInput, target.getOcean().getSize())) {
-
+                if (endgame.getIsEndMatch()){
+                    continue;
+                }
                 targetCoordinate = input.convertToCoordinates(targetCoordinateInput);
                 if (target.getOcean().isSquareShootable(targetCoordinate)) {
                     break;
@@ -115,11 +120,9 @@ public class Game {
             board.setOceanSquare(targetCoordinate, SquareStatus.MISSED);
             target.setOcean(board);
         } else {
-            System.out.println(target.getCurrentHP());
             target.setCurrentHP(target.getCurrentHP() - 1);
 
             Ship targetShip = target.getShipByCoordinate(targetCoordinate);
-            System.out.println(target.getCurrentHP());
 
             if (target.isShipBarelyAlive(targetShip)) {
                 Coordinates shipCurrentCellCoordinate;
