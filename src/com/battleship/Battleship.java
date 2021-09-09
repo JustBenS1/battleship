@@ -1,6 +1,4 @@
 //TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
-//TODO Sink feature
-//TODO same target (hit/miss) shoot again - bad (forever while loop) - BENCE
 //TODO endgames
 //TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
 package com.battleship;
@@ -50,15 +48,16 @@ public class Battleship {
         display.clear();
         if (mainMenuOption == 0){
             endgame.setEndgame(true);
-        }else if (mainMenuOption == 1){//newgame
+        }else if (mainMenuOption == 1){//newGame
             int sizeOption = sizeBuilder();
             if(sizeOption == 0){
-                menuSettings();//mmainmenu
+                menuSettings();//mainMenu
             }else{
                 boardSize = sizeOption;
+                //endgame.setBoardSize(boardSize);
             }
         }else{
-            //scoreboard implement needed
+            display.showHighScores(endgame.getHighScores());
             menuSettings();
         }
     }
@@ -68,11 +67,9 @@ public class Battleship {
         display.clear();
         while(!endgame.getIsEndgame()){
             menuSettings();
-            display.clear();
-            //game()//while
             Game game = new Game(boardSize);
-            game.run();
             display.clear();
+            game.run();
             if(menuBuilder(restartMenuOptions) == 0){
                 endgame.setEndgame(true);
             }else{
