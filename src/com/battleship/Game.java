@@ -24,12 +24,9 @@ public class Game {
 
     public Game(int size) {
         this.size = size;
-        ArrayList<Ship> baseFleet1 = createShipList();
-        ArrayList<Ship> baseFleet2 = createShipList();
 
-
-        player1 = new Player(maxHp, baseFleet1, getSize());
-        player2 = new Player(maxHp, baseFleet2, getSize());
+        player1 = new Player(createShipList(), maxHp, getSize());
+        player2 = new Player(createShipList(), maxHp,  getSize());
     }
 
     private ArrayList<Ship> createShipList() {
@@ -39,6 +36,8 @@ public class Game {
         for (ShipType typeOfShip : ShipType.values()) {
             fleet.add(new Ship(typeOfShip.getLength()));
             maxHp += typeOfShip.getLength();
+            System.out.println(typeOfShip.getLength());
+            System.out.println(typeOfShip);
         }
 
         this.maxHp = maxHp;
@@ -81,12 +80,20 @@ public class Game {
     }
 
     public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
-        display.printBoard(target.getOcean(),false);
-        display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
-        System.out.println("________________");
         String targetCoordinateInput = "";
         Coordinates targetCoordinate;
+        boolean wasTargetValid = true;
         while (true) {
+            display.clear();
+            display.printBoard(target.getOcean(),false);
+            display.printMessageLine(currentPlayer + " : " + shooter.getPlayerName() + "'s turn!");
+            if (!wasTargetValid){
+                display.printMessageLine("Last input was invalid!");
+            }else{
+                display.printMessageLine("");
+            }
+            display.printMessage("Please give a target coordinate (eg.: A1) : ");
+
             targetCoordinateInput = input.getInput();
             if (input.isCoordinateOnBoard(targetCoordinateInput, target.getOcean().getSize())) {
 
@@ -95,31 +102,33 @@ public class Game {
                     break;
                 }
             }
+            wasTargetValid = false;
         }
         return targetCoordinate;
     }
 
     public void hitTarget(Player target, Coordinates targetCoordinate) {
         Square targetSquare = target.getOcean().getOceanSquare(targetCoordinate);
-        Square newSquare;
-        Board board;
+        Board board = target.getOcean();
         if (targetSquare.getStatus().name().equals("EMPTY")) {
-            board = target.getOcean();
             board.setOceanSquare(targetCoordinate, SquareStatus.MISSED);
             target.setOcean(board);
         } else {
+            System.out.println(target.getCurrentHP());
             target.setCurrentHP(target.getCurrentHP() - 1);
+
             Ship targetShip = target.getShipByCoordinate(targetCoordinate);
+            System.out.println(target.getCurrentHP());
+
             if (target.isShipBarelyAlive(targetShip)) {
-                //Sinking
-                System.out.println(targetShip.getSquares().size());
-                System.out.println("fail");
+                Coordinates shipCurrentCellCoordinate;
+                for (Square shipSquare:targetShip.getSquares()) {
+                    shipCurrentCellCoordinate = new Coordinates(shipSquare.getCoordinates().getX(),shipSquare.getCoordinates().getY());
+                    board.setOceanSquare(shipCurrentCellCoordinate, SquareStatus.SUNK);
+                    shipSquare.setStatus(SquareStatus.SUNK);
+                }
             } else {
-                board = target.getOcean();
                 board.setOceanSquare(targetCoordinate, SquareStatus.HIT);
-                target.setOcean(board);
-
-
                 targetShip.setShipSquareByCoordinates(targetCoordinate,SquareStatus.HIT);
             }
         }

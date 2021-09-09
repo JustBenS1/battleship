@@ -15,7 +15,7 @@ public class Player {
     private final String[] choosePlayerNameText = {"Please, provide your name : "};
     private Board ocean;
 
-    public Player(int maxHP, ArrayList<Ship> fleet, int size) {
+    public Player(ArrayList<Ship> fleet, int maxHP,  int size) {
         this.currentHP = maxHP;
         this.fleet = fleet;
         ocean = new Board(size);
@@ -66,15 +66,9 @@ public class Player {
     public Ship getShipByCoordinate(Coordinates coordinate) {
         Ship shipOut = new Ship(0);
         for (Ship ship : fleet) {
-            System.out.println(fleet.size()+" fleetsize");
             for (Square square : ship.getSquares()) {
-                System.out.println(square.getCoordinates().getX()+"X squarex");
-                System.out.println(square.getCoordinates().getY()+"Y squarey");
-                System.out.println(coordinate.getX()+"X  : coordx");
-                System.out.println(coordinate.getY()+"Y  : coordy");
                 if (square.getCoordinates().getX() == coordinate.getX() &&
                         square.getCoordinates().getY() == coordinate.getY()) {
-                    System.out.println(ship.getSquares().size() + " ship squares size");
                     shipOut = ship;
                     break;
                 }
@@ -83,7 +77,6 @@ public class Player {
                 break;
             }
         }
-        System.out.println(shipOut.getSquares().size()+"shipout before return");
         return shipOut;
     }
 

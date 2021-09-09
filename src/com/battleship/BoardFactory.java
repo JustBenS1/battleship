@@ -26,10 +26,18 @@ public class BoardFactory {
     public void placementValidation(Ship ship) {
         boolean isShipOnBoard = false;
         boolean areSurroundingsValid = false;
+        boolean isValidPlacement = false;
+        boolean isValidDirection = true;
+
         while ((!isShipOnBoard || !areSurroundingsValid) && !endgame.getIsEndMatch()) {
 
-            boolean isValidPlacement = false;
-            boolean isValidDirection = false;
+            if (!isValidDirection){
+                display.printMessageLine("Direction was invalid");
+            }
+
+            isValidPlacement = false;
+            isValidDirection = false;
+
 
             while (!isValidPlacement && !endgame.getIsEndMatch()) {
                 isValidPlacement = getValidPlacement();
@@ -41,11 +49,9 @@ public class BoardFactory {
                 continue;
             }
 
-            while (!isValidDirection && !endgame.getIsEndMatch()) {
-                isValidDirection = getValidDirection();
-                if (!isValidDirection) {
-                    display.printMessageLine("Type a valid direction!");
-                }
+            isValidDirection = getValidDirection();
+            if (!isValidDirection) {
+                continue;
             }
             if (endgame.getIsEndMatch()){
                 continue;
@@ -68,19 +74,20 @@ public class BoardFactory {
         display.printMessage("Please give a start coordinate (eg.: A1) : ");
         String userInput = input.getInput();
         if(input.inputIsQuit(userInput)){
-           return false;
+            display.clear();
+            return false;
         }
-        display.clear();
         if (!input.isCoordinateOnBoard(userInput, board.getSize())) {
+            display.clear();
             return false;
         }
         Coordinates coordinate = input.convertToCoordinates(userInput);
         if (!board.isSquareEmpty(coordinate) || !board.areNeighboursEmpty(coordinate)) {
+            display.clear();
             return false;
         }
         //direction
         startCoordinate = coordinate;
-        display.clear();
         return true;
     }
 
@@ -88,8 +95,8 @@ public class BoardFactory {
         display.printMessage("Please give a direction (North, East, South, West) : ");
         String direction = input.getInput().toUpperCase();
         input.inputIsQuit(direction);
-        display.clear();
         if (!Input.getInstance().isValidDirection(direction)) {
+            display.clear();
             return false;
         }
         this.direction = direction;

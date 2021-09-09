@@ -1,9 +1,10 @@
-//TODO placement good coordinate with bad direction - does not repeat getCoordinate
+//TODO placement good coordinate with bad direction -done
+// does not repeat getCoordinate when already shot at cell -done
 //TODO print emojis sizes rearrange misplace - GERGŐ
-//TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
+//TODO same target (hit/miss) shoot again - bad (forever while loop) - BENCE -done
 //TODO Sink feature
-//TODO same target (hit/miss) shoot again - bad (forever while loop) - BENCE
 //TODO endgames
+//TODO print hidden enemy board (that we shoot at) shoot , print same board again (input/timer) , print next board
 package com.battleship;
 
 import com.battleship.util.*;
