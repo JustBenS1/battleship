@@ -200,7 +200,7 @@ public class BoardFactory {
     public void run() {
         for (Ship ship : fleet) {
             display.clear();
-            display.printMessage("Ship placement phase");
+            display.printMessageLine("Ship placement phase");
             display.printBoard(board, false);
             shipSize = ship.getSquares().size();
             placementValidation(ship);
