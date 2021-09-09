@@ -12,14 +12,14 @@ public class Player {
     private ArrayList<Ship> fleet;
     private int currentHP;
     private final String playerName;
-    private final String[] choosePlayerNameText = {"Please, provide your name : "};
+    private final String[] choosePlayerNameText = {"Player"," , please provide pl name : "};
     private Board ocean;
 
-    public Player(ArrayList<Ship> fleet, int maxHP,  int size) {
+    public Player(ArrayList<Ship> fleet, int maxHP,  int size, int nThPlayer) {
         this.currentHP = maxHP;
         this.fleet = fleet;
         ocean = new Board(size);
-        playerName = getSetPlayerName();
+        playerName = getSetPlayerName(nThPlayer);
     }
 
     public ArrayList<Ship> getFleet() {
@@ -54,9 +54,10 @@ public class Player {
         return playerName;
     }
 
-    public String getSetPlayerName() {
-        display.printMenuOptions(choosePlayerNameText,"");
+    public String getSetPlayerName(int nthPlayer) {
+        display.printMessage(choosePlayerNameText[0]+nthPlayer+choosePlayerNameText[1]);
         String userInput = input.getInput();
+        display.clear();
         if (input.isStringOnlySpace(userInput) || userInput.equals("")) {
             return "Dummy";
         }

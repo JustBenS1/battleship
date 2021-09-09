@@ -24,8 +24,8 @@ public class Game {
     public Game(int size) {
         this.size = size;
 
-        player1 = new Player(createShipList(), maxHp, getSize());
-        player2 = new Player(createShipList(), maxHp,  getSize());
+        player1 = new Player(createShipList(), maxHp, getSize(), 1);
+        player2 = new Player(createShipList(), maxHp, getSize(),2);
     }
 
     private ArrayList<Ship> createShipList() {
@@ -43,10 +43,11 @@ public class Game {
     }
 
     public void run() {
-        display.printBoardsHeaders(player1, player2, 2, 10);
-        display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, 2, 10);
-        Coordinates targetCoordinate;
         while (!endgame.getIsEndMatch()) {
+            display.printMessageLine("Ship placement phase");
+            display.printBoardsHeaders(player1, player2, 2, 10);
+            display.printTwoBoards(player1.getOcean(), player2.getOcean(), true, 2, 10);
+            Coordinates targetCoordinate;
             System.out.println("i'm alive");
             placeShips(player1);
             if (endgame.getIsEndMatch()) {
@@ -74,8 +75,6 @@ public class Game {
     public void placeShips(Player player) {
         BoardFactory boardFactory = new BoardFactory(player);
         boardFactory.run();
-        System.out.println("shooting phase starts");
-        System.out.println();
     }
 
     public Coordinates getValidShot(Player shooter, Player target, String currentPlayer) {
