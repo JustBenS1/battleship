@@ -95,7 +95,7 @@ public class BoardFactory {
                 Coordinates randomCoordinates = generateRandomStartCoordinate();
                 isValidPlacement = (board.isSquareEmpty(randomCoordinates) && board.areNeighboursEmpty(randomCoordinates));
                 if (!isValidPlacement) {
-                    break;
+                    continue; // from break (BUG)
                 }
                 randomDirection = generateRandomDirection();
 
@@ -104,6 +104,7 @@ public class BoardFactory {
             isShipOnBoard = checkShipInBoard(randomDirection);
             if (!isShipOnBoard) {
                 isValidPlacement = false;
+                continue; // added
             }
             areSurroundingsValid = checkSurroundings();
             if (!areSurroundingsValid) {
@@ -174,7 +175,6 @@ public class BoardFactory {
                     return false;
                 }
                 this.endCoordinate = checkCoordinate;
-                System.out.println(endCoordinate.getX() + " X " + endCoordinate.getY() + " Y  (east) ");
             }
             case "SOUTH" -> {
                 checkCoordinate = new Coordinates(newX + shipSize - 1, newY);
@@ -182,7 +182,6 @@ public class BoardFactory {
                     return false;
                 }
                 this.endCoordinate = checkCoordinate;
-                System.out.println(endCoordinate.getX() + " X " + endCoordinate.getY() + " Y  (south) ");
             }
         }
         display.clear();
